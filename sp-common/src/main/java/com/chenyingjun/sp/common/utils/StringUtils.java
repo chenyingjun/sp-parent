@@ -20,6 +20,21 @@ import java.util.regex.Pattern;
 public class StringUtils {
 
     /**
+     * 把数组转换成set
+     * @param array
+     * @return
+     */
+    public static Set<?> array2Set(Object[] array) {
+        Set<Object> set = new TreeSet<Object>();
+        for (Object id : array) {
+            if(null != id){
+                set.add(id);
+            }
+        }
+        return set;
+    }
+
+    /**
      * 将以逗号分隔的字符串转换成字符串数组
      *
      * @param valStr

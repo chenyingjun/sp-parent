@@ -9,6 +9,6 @@
 	   default-lazy-init="true">
 
 	<description>Spring公共配置 </description>
-
-	<import resource="classpath*:/applicationContext-redis.xml"/>
+	<import resource="classpath*:/applicationContext-cache.xml"/>
+	<import resource="classpath*:/applicationContext-shiro.xml"/>
 </beans>

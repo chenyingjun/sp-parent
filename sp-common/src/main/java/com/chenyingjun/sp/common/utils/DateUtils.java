@@ -1,6 +1,5 @@
 package com.chenyingjun.sp.common.utils;
 
-import com.chenyingjun.sp.common.utils.RegexStringsUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.DateFormat;
