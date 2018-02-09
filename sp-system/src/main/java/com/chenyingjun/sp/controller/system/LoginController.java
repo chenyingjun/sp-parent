@@ -16,6 +16,6 @@ public class BaseController {
         model.put("time",new Date());
         model.put("message","this is a message");
         LoggerUtils.error(getClass(), "this login url");
-        return "web";
+        return "sign";
     }
 }
