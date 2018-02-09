@@ -23,7 +23,7 @@
 	    <!--cookie的有效时间 -->
 	    <property name="maxAge" value="-1"/>
 	    <!-- 配置存储Session Cookie的domain为 一级域名
-	    <property name="domain" value=".itboy.net"/>
+	    <property name="domain" value=".xyz.net"/>
 	     -->
 	</bean>
 	<!-- custom shiro session listener -->
@@ -35,7 +35,7 @@
 	    <constructor-arg value="v_v-re-chenyingjun"/>
 	    <property name="httpOnly" value="true"/>
 	    <!-- 配置存储rememberMe Cookie的domain为 一级域名
-	    <property name="domain" value=".itboy.net"/>
+	    <property name="domain" value=".xyz.net"/>
 	     -->
 	    <property name="maxAge" value="2592000"/><!-- 30天时间，记住我30天 -->
 	</bean>
@@ -161,9 +161,6 @@
 			<value>
 				/test/map = authc
 				/include/** = anon
-				/views/error/** = anon
-				/views/signin.jsp = anon
-				/views/main.jsp = anon
 				/login = anon
 				/** = anon
 			</value>

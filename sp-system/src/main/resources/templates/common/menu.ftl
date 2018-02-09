@@ -1,11 +1,7 @@
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <h5 class="sidebartitle">菜单导航</h5>
 <ul id="menu" class="nav nav-pills nav-stacked nav-bracket">
 	<li
-		onclick="javascript:window.location.href='<%=request.getContextPath()%>/main'"
+		onclick="javascript:window.location.href='${request.contextPath}/main'"
 		id="liMain"><a href="#"><i class="fa fa-home"></i> <span>我的主页</span></a>
 	</li>
 	<sec:authorize access="hasAnyRole('ADMINISTRATOR', 'PROCESS')">
@@ -14,13 +10,13 @@
 			</span></a>
 			<ul class="children">
 			<sec:authorize access="hasAnyRole('ADMINISTRATOR', 'PROCESS_ARTICLE')">
-				<li><a href="<%=request.getContextPath()%>/articleprocess/"><i
+				<li><a href="${request.contextPath}/articleprocess/"><i
 						class="fa fa-caret-right"></i> 文章任务管理 <span
 						class="pull-right badge badge-success" id="articleProcessCount"></span>
 				</a></li>
 			</sec:authorize>
 			<sec:authorize access="hasAnyRole('ADMINISTRATOR', 'PROCESS_SUGGESTION')">
-				<li><a href="<%=request.getContextPath()%>/suggestionprocess/"><i
+				<li><a href="${request.contextPath}/suggestionprocess/"><i
 						class="fa fa-caret-right"></i> 反馈任务管理 <span
 						class="pull-right badge badge-success" id="suggestionProcessCount"></span>
 				</a></li>
@@ -35,7 +31,7 @@
 			</span></a>
 			<ul class="children">
 			<sec:authorize access="hasAnyRole('ADMINISTRATOR', 'MEMBER_CUSTOMER')">
-				<li><a href="<%=request.getContextPath()%>/customer/"><i
+				<li><a href="${request.contextPath}/customer/"><i
 						class="fa fa-caret-right"></i> 会员信息管理 <span
 						class="pull-right badge badge-success"></span>
 				</a></li>
@@ -48,13 +44,13 @@
 			</span></a>
 			<ul class="children">
 			<sec:authorize access="hasAnyRole('ADMINISTRATOR', 'SHARE_ARTICLE')">
-				<li><a href="<%=request.getContextPath()%>/article/"><i
+				<li><a href="${request.contextPath}/article/"><i
 						class="fa fa-caret-right"></i> 文章信息管理 <span
 						class="pull-right badge badge-success"></span>
 				</a></li>
 			</sec:authorize>
 			<sec:authorize access="hasAnyRole('ADMINISTRATOR', 'SHARE_VIDEOS')">
-				<li><a href="<%=request.getContextPath()%>/videos/"><i
+				<li><a href="${request.contextPath}/videos/"><i
 						class="fa fa-caret-right"></i> 视频信息管理 <span
 						class="pull-right badge badge-success"></span>
 				</a></li>
@@ -67,7 +63,7 @@
 		</span></a>
 		<ul class="children">
 		<sec:authorize access="hasAnyRole('ADMINISTRATOR', 'BASE_GGCODEINTEGRAL')">
-			<li><a href="<%=request.getContextPath()%>/ggcodeintegral/"><i
+			<li><a href="${request.contextPath}/ggcodeintegral/"><i
 					class="fa fa-caret-right"></i> 积分规则管理 <span
 					class="pull-right badge badge-success"></span>
 			</a></li>
@@ -80,19 +76,19 @@
 			</span></a>
 			<ul class="children">
 			<sec:authorize access="hasAnyRole('ADMINISTRATOR', 'SYSTEM_SYSTEMUSER')">
-				<li><a href="<%=request.getContextPath()%>/systemuser/"><i
+				<li><a href="${request.contextPath}/systemuser/"><i
 						class="fa fa-caret-right"></i> 系统用户管理 <span
 						class="pull-right badge badge-success"></span>
 				</a></li>
 			</sec:authorize>
 			<sec:authorize access="hasAnyRole('ADMINISTRATOR', 'SYSTEM_SYSTEMROLE')">
-				<li><a href="<%=request.getContextPath()%>/systemrole/"><i
+				<li><a href="${request.contextPath}/systemrole/"><i
 						class="fa fa-caret-right"></i> 系统角色管理 <span
 						class="pull-right badge badge-success"></span>
 				</a></li>
 			</sec:authorize>
 			<sec:authorize access="hasAnyRole('ADMINISTRATOR', 'SYSTEM_SYSTEMMENU')">
-				<li><a href="<%=request.getContextPath()%>/systemmenu/"><i
+				<li><a href="${request.contextPath}/systemmenu/"><i
 						class="fa fa-caret-right"></i> 菜单管理 <span
 						class="pull-right badge badge-success"></span>
 				</a></li>
@@ -105,7 +101,7 @@
 
 		var uri = window.location.pathname;
 
-		if (uri == "<%=request.getContextPath()%>" +'/main') {
+		if (uri == "${request.contextPath}" +'/main') {
 			$("#liMain").addClass("active");
 		}
 		
@@ -346,6 +342,6 @@ function findUserInfo() {
 
 
 function updateUserPWD() {
-	$("#updateUserPwdForm").attr("action","<%=request.getContextPath()%>" + "/user/update/pwd");
+	$("#updateUserPwdForm").attr("action","${request.contextPath}" + "/user/update/pwd");
 }
 </script>

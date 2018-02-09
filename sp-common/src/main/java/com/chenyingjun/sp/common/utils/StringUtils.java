@@ -20,6 +20,24 @@ import java.util.regex.Pattern;
 public class StringUtils {
 
     /**
+     * 一次性判断多个或单个对象为空。
+     * @param objects
+     * @author zhou-baicheng
+     * @return 只要有一个元素为Blank，则返回true
+     */
+    public static boolean isBlank(Object...objects){
+        Boolean result = false ;
+        for (Object object : objects) {
+            if(null == object || "".equals(object.toString().trim())
+                    || "null".equals(object.toString().trim())){
+                result = true ;
+                break ;
+            }
+        }
+        return result ;
+    }
+
+    /**
      * 把数组转换成set
      * @param array
      * @return

@@ -3,6 +3,7 @@ package com.chenyingjun.sp.core.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 /**
  * 用户信息
@@ -12,7 +13,10 @@ import java.util.Date;
  * @since 1.0
  */
 @Data
-public class SystemUser{
+public class SystemUser  implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     //0:禁止登录
     public static final Long _0 = new Long(0);
     //1:有效
@@ -79,9 +83,17 @@ public class SystemUser{
      */
     private Date lastLoginTime;
 
+    public SystemUser() {
+    }
+
     public SystemUser(String username, String password) {
         this.username = username;
         this.password = password;
+
+        this.id = "1";
+        this.email = "2";
+        this.createDate = new Date();
+        this.lastLoginTime = new Date();
     }
     public SystemUser(SystemUser user) {
         this.id = user.getId();

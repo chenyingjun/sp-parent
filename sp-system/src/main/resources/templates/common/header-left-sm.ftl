@@ -14,7 +14,7 @@
 			href="javascript:void(0);" onclick="updatePersonPWD();"><i
 				class="fa fa-lock"></i> <span>修改密码</span></a></li>
 		<li><a
-			href="<%=request.getContextPath()%>/j_spring_security_logout"><i
+			href="${request.contextPath}/j_spring_security_logout"><i
 				class="fa fa-sign-out"></i> <span>退出登录</span></a></li>
 	</ul>
 </div>

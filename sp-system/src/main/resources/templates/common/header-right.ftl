@@ -16,7 +16,7 @@
 						href="javascript:void(0);" onclick="updateUserPWD();"><i
 							class="glyphicon glyphicon-lock"></i> <span>修改密码</span></a></li>
 					<li><a
-						href="<%=request.getContextPath()%>/j_spring_security_logout"><i
+						href="${request.contextPath}/j_spring_security_logout"><i
 							class="glyphicon glyphicon-log-out"></i> 退出登录</a></li>
 				</ul>
 			</div>

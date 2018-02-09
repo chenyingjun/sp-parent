@@ -1,32 +1,20 @@
-package com.sojson.common.utils;
+package com.chenyingjun.sp.common.utils;
 
+import org.apache.commons.lang.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang.StringUtils;
-
-
 /**
- * 
  * 静态化路径工具类
- * 
- * <p>
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2013-6-11　<br/>
- * <p>
- * 
- * @author
- * 
- * @version 1.0, 2013-6-11
- * 
+ *
+ * @author chenyingjun
+ * @version 2018年02月09日
+ * @since 1.0
  */
-public class UtilPath {
+public class PathUtils {
 
 	/**
 	 * 获取到classes目录
@@ -37,9 +25,9 @@ public class UtilPath {
 		
 		//判断当前环境，如果是Windows 要截取路径的第一个 '/'
 		if(!StringUtils.isBlank(systemName) && systemName.indexOf("Windows") !=-1){
-			return UtilPath.class.getResource("/").getFile().toString().substring(1);
+			return PathUtils.class.getResource("/").getFile().toString().substring(1);
 		}else{
-			return UtilPath.class.getResource("/").getFile().toString();
+			return PathUtils.class.getResource("/").getFile().toString();
 		}
 	}
 	/**
@@ -107,7 +95,7 @@ public class UtilPath {
 	 * @return
 	 */
 	public static String getDate(){
-		SimpleDateFormat sformart=new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss"); 
+		SimpleDateFormat sformart=new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		String result = sformart.format(new Date());
 		result = result.replace("_", "T");
 		result += "+08:00";
