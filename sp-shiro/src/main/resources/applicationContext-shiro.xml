@@ -159,10 +159,11 @@
 		<!--	初始配置，现采用自定义	-->
 		<property name="filterChainDefinitions" >
 			<value>
-				/test/map = authc
 				/include/** = anon
+				/error/** = anon
 				/login = anon
-				/** = anon
+				/submitLogin = anon
+				/** = authc
 			</value>
 		</property>
        <property name="filters">

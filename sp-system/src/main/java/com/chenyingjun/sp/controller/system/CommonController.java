@@ -8,18 +8,21 @@ import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Controller
 @RequestMapping("")
-public class LoginController {
+public class CommonController {
 
     @RequestMapping("login")
     public String login(Map<String,Object> model) {
@@ -29,6 +32,12 @@ public class LoginController {
         return "sign";
     }
 
+    @RequestMapping(value = "main")
+    public String userMain(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
+        Date date = new Date();
+        map.put("nowTime", date);
+        return "main";
+    }
 
     /**
      * 登录提交
@@ -63,13 +72,10 @@ public class LoginController {
             LoggerUtils.fmtDebug(getClass(), "获取登录之前的URL:[%s]",url);
             //如果登录之前没有地址，那么就跳转到首页。
             if(StringUtils.isBlank(url)){
-                url = request.getContextPath() + "/user/index.shtml";
+                url = request.getContextPath() + "/main";
             }
             //跳转地址
             resultMap.put("back_url", url);
-            /**
-             * 这里其实可以直接catch Exception，然后抛出 message即可，但是最好还是各种明细catch 好点。。
-             */
         } catch (DisabledAccountException e) {
             resultMap.put("status", 500);
             resultMap.put("message", "帐号已经禁用。");

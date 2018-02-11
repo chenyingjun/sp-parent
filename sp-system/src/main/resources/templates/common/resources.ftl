@@ -1,5 +1,5 @@
 <link rel="shortcut icon"
-	href="${request.contextPath}/include/images/redcherry.png"
+	href="${request.contextPath}/include/images/chenyingjun.ico"
 	type="image/png">
 <link
 	href="${request.contextPath}/include/css/style.default.css"

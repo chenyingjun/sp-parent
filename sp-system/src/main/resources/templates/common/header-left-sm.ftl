@@ -1,9 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <div class="visible-xs hidden-sm hidden-md hidden-lg">
 	<div class="media userlogged">
 		<div class="media-body">
-			<h4>${sessionScope.user.nickName }</h4>
+			<#--<h4>${sessionScope.user.nickName }</h4>-->
 		</div>
 	</div>
 	<ul class="nav nav-pills nav-stacked nav-bracket mb30">

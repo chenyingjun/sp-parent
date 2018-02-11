@@ -1,12 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <div class="header-right">
 	<ul class="headermenu">
 		<li>
 			<div class="btn-group">
 				<button type="button" class="btn btn-default dropdown-toggle"
 					data-toggle="dropdown">
-					${sessionScope.user.nickName } <span class="caret"></span>
+					<#--${sessionScope.user.nickName } --><span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu dropdown-menu-usermenu pull-right">
 					<li><a data-toggle="modal" data-target="#userModal"
