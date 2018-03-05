@@ -38,7 +38,7 @@
 								data-option="edit" action="" class="form-horizontal"
 								method="post" accept-charset="UTF-8"
 								enctype="application/x-www-form-urlencoded">
-								<input type="hidden" name="id" id="updatePwdUserId" value="${sessionScope.user.id }">
+								<input type="hidden" name="id" id="updatePwdUserId" value="${user.id }">
 								<div class="panel panel-default">
 									<div class="panel-body">
 										<div class="form-group">
@@ -101,48 +101,48 @@
 									<label class="col-sm-2 control-label">用户名：</label>
 									<div class="col-sm-4">
 										<input type="text" name="nickName"
-											class="form-control" value="${sessionScope.user.nickName }"  disabled="disabled"  />
+											class="form-control" value="${user.username?default('未设置') }"  disabled="disabled"  />
 									</div>
 									<label class="col-sm-2 control-label">姓名：</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" 
-										value="${sessionScope.user.name }"  disabled="disabled"  />
+										value="${user.name?default('未设置') }"  disabled="disabled"  />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">手机号码：</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control"
-										value="${sessionScope.user.phone }"  disabled="disabled"  />
+										value="${user.phone?default('未设置') }"  disabled="disabled"  />
 									</div>
 									<label class="col-sm-2 control-label">邮箱：</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" 
-										value="${sessionScope.user.email }"  disabled="disabled"  />
+										value="${user.email?default('未设置') }"  disabled="disabled"  />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">性别：</label>
 									<div class="col-sm-4">
-										<select id="sex" name="sex" class="select2"  disabled="disabled" >
-											<option value="1" <c:if test="${sessionScope.user.sex == 'male' }"> selected="selected" </c:if>>男</option>
-											<option value="2" <c:if test="${sessionScope.user.sex == 'female' }"> selected="selected" </c:if>>女</option>
-										</select>
+										<#--<select id="sex" name="sex" class="select2"  disabled="disabled" >-->
+											<#--<option value="1" <c:if test="${user.sex == 'male' }"> selected="selected" </c:if>>男</option>-->
+											<#--<option value="2" <c:if test="${user.sex == 'female' }"> selected="selected" </c:if>>女</option>-->
+										<#--</select>-->
 									</div>
 									<label class="col-sm-2 control-label">状态：</label>
 									<div class="col-sm-4">
-										<select id="userStatus" name="userStatus" class="select2"
-											disabled="disabled" >
-											<option value="1" <c:if test="${sessionScope.user.status == '1' }"> selected="selected" </c:if>>可用</option>
-											<option value="2" <c:if test="${sessionScope.user.status == '0' }"> selected="selected" </c:if>>禁用</option>
-										</select>
+										<#--<select id="userStatus" name="userStatus" class="select2"-->
+											<#--disabled="disabled" >-->
+											<#--<option value="1" <c:if test="${user.status == '1' }"> selected="selected" </c:if>>可用</option>-->
+											<#--<option value="2" <c:if test="${user.status == '0' }"> selected="selected" </c:if>>禁用</option>-->
+										<#--</select>-->
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">连续登录失败次数：</label>
 									<div class="col-sm-4">
 										<input type="text" disabled="disabled"
-											value="${sessionScope.user.failNum }"
+											value="${user.failNum?default('未设置') }"
 											class="form-control" />
 									</div>
 								</div>
@@ -150,13 +150,13 @@
 									<label class="col-sm-2 control-label">创建时间：</label>
 									<div class="col-sm-4">
 										<input type="text" disabled="disabled"
-											value='<fmt:formatDate value="${sessionScope.user.createTime }" pattern="yyyy-MM-dd HH:mm:ss" />'
+											value="${user.createDate?string('yyyy-MM-dd HH:mm:ss')}"
 											class="form-control" />
 									</div>
 									<label class="col-sm-2 control-label">修改时间：</label>
 									<div class="col-sm-4">
 										<input type="text" disabled="disabled"
-											value='<fmt:formatDate value="${sessionScope.user.updateTime }" pattern="yyyy-MM-dd HH:mm:ss" />'
+											value="${user.updateDate?string('yyyy-MM-dd HH:mm:ss')}"
 											class="form-control" />
 									</div>
 								</div>

@@ -32,10 +32,19 @@ public class CommonController {
         return "sign";
     }
 
+    @RequestMapping(value = "")
+    public String main(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
+        return userMain(request, response, map);
+    }
+
     @RequestMapping(value = "main")
     public String userMain(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
         Date date = new Date();
         map.put("nowTime", date);
+        SystemUser user = TokenManager.getToken();
+        user.setCreateDate(date);
+        user.setUpdateDate(date);
+        map.put("user", user);
         return "main";
     }
 

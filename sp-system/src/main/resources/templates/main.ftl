@@ -63,21 +63,21 @@
 			</div>
 			<div class="contentpanel" style="position:static">
 				<div class="row">
-						<div class="col-md-5" style="position:absolute;right:0;bottom:0;">
+						<div class="col-md-2" style="position:absolute;right:0;bottom:0;">
 							<div class="panel panel-success panel-stat">
 								<div class="panel-heading">
 	
 									<div style="color: #fff;padding-left: 40px;">
 										<div class="row">
-											<input type="hidden" id="hidServerTime" value="${nowTime }">
+											<input type="hidden" id="hidServerTime" value="${nowTime?string('yyyy-MM-dd HH:mm:ss') }">
 											<h3 id="serverTime"></h3>
 										</div>
 										<!-- row -->
-										<div class="row">
-											<h5>上次登录IP：${userLoginRecord.t.ip }
-											&nbsp;&nbsp;&nbsp;
-											上次登录时间：<fmt:formatDate value="${userLoginRecord.t.createTime }" pattern="yyyy-MM-dd HH:mm:ss" /></h5>
-										</div>
+										<#--<div class="row">-->
+											<#--<h5>上次登录IP：${userLoginRecord.t.ip }-->
+											<#--&nbsp;&nbsp;&nbsp;-->
+											<#--上次登录时间：<fmt:formatDate value="${userLoginRecord.t.createTime }" pattern="yyyy-MM-dd HH:mm:ss" /></h5>-->
+										<#--</div>-->
 										<!-- row -->
 									</div>
 									<!-- stat -->
@@ -124,12 +124,12 @@
 		});
 		
 		var updateDate = function(){
-			var time = parseInt($("#hidServerTime").val());
-			var date = new Date();
-			date.setTime(time);
+//			var time = parseInt($("#hidServerTime").val());
+			var date = new Date($("#hidServerTime").val());
 			$("#serverTime").html(date.format("yyyy-MM-dd HH:mm:ss"));
-			time = time + 1000;
-			$("#hidServerTime").val(time);
+            var time = date.getTime() + 1000;
+            date.setTime(time);
+            $("#hidServerTime").val(date);
 		};
 	</script>
 </body>
