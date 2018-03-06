@@ -17,10 +17,6 @@ import java.util.Date;
 public class UserOnlineBo extends SystemUser implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	//0:禁止登录
-	public static final Long _0 = new Long(0);
-	//1:有效
-	public static final Long _1 = new Long(1);
 
 	//Session Id
 	private String sessionId;

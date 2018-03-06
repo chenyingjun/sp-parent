@@ -46,7 +46,7 @@
                 enctype="application/x-www-form-urlencoded">
                 <h4 class="nomargin">登录后台业务管理系统</h4>
                 <p class="mt5 mb20">
-                    <#--<span style="color: red">${requestScope.SPRING_SECURITY_LAST_EXCEPTION_MESSAGE }</span>-->
+                    <span style="color: red" id="errorInfo"></span>
                 </p>
                 <input type="text" name="account"
                        class="form-control uname" placeholder="请输入用户名"
@@ -62,7 +62,7 @@
                          id="verifyCodeImg"
                          style="width: auto; height: 38px; float: right; margin-top: -40px;" />
                 </c:if>-->
-                <button class="btn btn-success btn-block" type="button" id="login">登录</button>
+                <button class="btn btn-success btn-block" type="button" id="login" onclick="javascript:">登录</button>
                 </form>
             </div>
             <!-- col-sm-5 -->
@@ -77,6 +77,12 @@
 </section>
 <script type="text/javascript">
     $(function($) {
+
+        $("body").keydown(function() {
+            if (event.keyCode == "13") {//keyCode=13是回车键
+                $('#login').click();
+            }
+        });
 
         //登录操作
         $('#login').click(function(){
@@ -102,7 +108,7 @@
                 return false;
             }
             var pswd = password;
-            var data = {password:password,account:username,rememberMe:$("#rememberMe").is(':checked')};
+            var data = {passWord:password,account:username,rememberMe:$("#rememberMe").is(':checked')};
 
             $.ajax({
                 url:"${request.contextPath}/submitLogin",
@@ -118,11 +124,17 @@
                         $('.password').val('');
                         return;
                     }else{
-                        console.log('登录成功！');
-                        setTimeout(function(){
-                            //登录返回
-                            window.location.href= result.data.back_url || "${request.contextPath}/";
-                        },1000)
+                        var data = result.data;
+                        if (data && data.status != 200) {
+                            $('#errorInfo').html(data.message);
+                            $('.pword').val('');
+                            return;
+                        } else {
+                            setTimeout(function(){
+                                //登录返回
+                                window.location.href= result.data.back_url || "${request.contextPath}/";
+                            },1000)
+                        }
                     }
                 },
                 error:function(e){

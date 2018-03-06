@@ -2,7 +2,6 @@ package com.chenyingjun.sp.shiro.filter;
 
 import com.chenyingjun.sp.common.utils.LoggerUtils;
 import com.chenyingjun.sp.core.entity.SystemUser;
-import com.chenyingjun.sp.shiro.token.manager.TokenManager;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.web.filter.AccessControlFilter;
 

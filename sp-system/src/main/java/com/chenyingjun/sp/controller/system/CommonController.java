@@ -8,7 +8,6 @@ import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +32,7 @@ public class CommonController {
     }
 
     @RequestMapping(value = "main")
-    public String userMain(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
+    public String userMain(ModelMap map) {
         Date date = new Date();
         map.put("nowTime", date);
         return "main";
@@ -51,7 +50,7 @@ public class CommonController {
     public Map<String,Object> submitLogin(SystemUser entity, Boolean rememberMe, HttpServletRequest request){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         try {
-            entity = TokenManager.login(entity,rememberMe);
+            TokenManager.login(entity,rememberMe);
             resultMap.put("status", 200);
             resultMap.put("message", "登录成功");
 
@@ -84,6 +83,25 @@ public class CommonController {
             resultMap.put("message", "帐号或密码错误");
         }
 
+        return resultMap;
+    }
+
+    /**
+     * 退出
+     * @return
+     */
+    @RequestMapping(value="logout",method =RequestMethod.GET)
+    @ResponseBody
+    public Map<String,Object> logout(){
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        try {
+            TokenManager.logout();
+            resultMap.put("status", 200);
+        } catch (Exception e) {
+            resultMap.put("status", 500);
+            LoggerUtils.error(getClass(), "errorMessage:" + e.getMessage());
+            LoggerUtils.fmtError(getClass(), e, "退出出现错误，%s。", e.getMessage());
+        }
         return resultMap;
     }
 }

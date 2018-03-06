@@ -321,6 +321,17 @@
 
 
     function updateUserPWD() {
-        $("#updateUserPwdForm").attr("action", "${request.contextPath}" + "/user/update/pwd");
+        $("#updateUserPwdForm").attr("action", path + "/user/update/pwd");
+    }
+
+    /**退出*/
+    function logout(){
+        $.getJSON(path + "/logout",{},function(result){
+            if(result && result.data.status == 200){
+                window.location.reload(true);
+                return !1;
+            }else{
+            }
+        });
     }
 </script>
