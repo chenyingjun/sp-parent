@@ -111,7 +111,7 @@
             var data = {passWord:password,account:username,rememberMe:$("#rememberMe").is(':checked')};
 
             $.ajax({
-                url:"${request.contextPath}/submitLogin",
+                url:path + "/submitLogin",
                 data:data,
                 type:"post",
                 dataType:"json",

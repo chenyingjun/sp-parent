@@ -2,10 +2,12 @@ package com.chenyingjun.sp.core.service;
 
 import com.chenyingjun.sp.core.entity.SystemUser;
 import com.chenyingjun.sp.core.mapper.SystemUserMapper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,5 +31,18 @@ public class SystemUserService extends BaseService<SystemUser>{
         map.put("account", account);
         map.put("passWord", passWord);
         return systemUserMapper.login(map);
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param find 查询信息
+     * @param pageNum 当前页码
+     * @param pageSize 每页数量
+     * @return 组织列表
+     */
+    public PageInfo<SystemUser> page(int pageNum, int pageSize) {
+        List<SystemUser> list = systemUserMapper.selectAll();
+        return this.basePageByExample(list, pageNum, pageSize);
     }
 }
