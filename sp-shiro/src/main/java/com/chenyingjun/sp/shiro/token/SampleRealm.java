@@ -1,6 +1,8 @@
 package com.chenyingjun.sp.shiro.token;
 
+import com.chenyingjun.sp.core.entity.BaseEntity;
 import com.chenyingjun.sp.core.entity.SystemUser;
+import com.chenyingjun.sp.core.service.SystemUserService;
 import com.chenyingjun.sp.shiro.token.manager.TokenManager;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -9,11 +11,9 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -31,7 +31,8 @@ public class SampleRealm extends AuthorizingRealm {
 	PermissionService permissionService;
 	@Autowired
 	OrgService roleService;*/
-	
+	@Autowired
+	SystemUserService systemUserService;
 	public SampleRealm() {
 		super();
 	}
@@ -42,21 +43,23 @@ public class SampleRealm extends AuthorizingRealm {
 			AuthenticationToken authcToken) throws AuthenticationException {
 		
 		ShiroToken token = (ShiroToken) authcToken;
-//		SystemUser user = userService.login(token.getUsername(),token.getPswd());
-		SystemUser user = new SystemUser(token.getUsername(), token.getPswd());
+		SystemUser user = systemUserService.login(token.getUsername(), token.getPswd());
+//		SystemUser user = new SystemUser(token.getUsername(), token.getPswd());
 		if(null == user){
 			throw new AccountException("帐号或密码不正确！");
 		/**
 		 * 如果用户的status为禁用。那么就抛出<code>DisabledAccountException</code>
 		 */
-		}else if(SystemUser._0.equals(user.getStatus())){
+		}else if(BaseEntity.STATUS_0.equals(user.getStatus())){
 			throw new DisabledAccountException("帐号已经禁止登录！");
 		}else{
 			//更新登录时间 last login time
 //			user.setUpdateDate(new Date());
-//			userService.updateByPrimaryKeySelective(user);
+			user.setLastTime(user.getLoginTime());
+			user.setLoginTime(new Date());
+			systemUserService.baseUpdateByPrimaryKeySelective(user);
 		}
-		return new SimpleAuthenticationInfo(user, user.getPassword(), getName());
+		return new SimpleAuthenticationInfo(user, user.getPassWord(), getName());
     }
 
 	 /** 

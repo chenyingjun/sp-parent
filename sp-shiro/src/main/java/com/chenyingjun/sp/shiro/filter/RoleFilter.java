@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class RoleFilter extends AccessControlFilter {
 
-	static final String LOGIN_URL = "http://www.sojson.com/user/open/toLogin.shtml";
-	static final String UNAUTHORIZED_URL = "http://www.sojson.com/unauthorized.html";
+	static final String LOGIN_URL = "/login";
+	static final String UNAUTHORIZED_URL = "/401";
 	
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request,

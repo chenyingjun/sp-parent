@@ -165,7 +165,7 @@ var table = function(requestUrl, formId, tableId, successFun, useCache) {
                             localStorage[tableId] = JSON.stringify(param);
                         }
 
-                        var page = resp.t;
+                        var page = resp.data;
 
                         var data = page.list;
 

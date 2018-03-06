@@ -1,4 +1,4 @@
-package com.chenyingjun.sp.core.entity;
+package com.chenyingjun.sp.core.entity1;
 
 
 import lombok.Data;

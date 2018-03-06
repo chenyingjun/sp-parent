@@ -1,6 +1,9 @@
 package com.chenyingjun.sp.controller;
 
 import com.chenyingjun.sp.common.utils.LoggerUtils;
+import com.chenyingjun.sp.core.entity.SystemUser;
+import com.chenyingjun.sp.core.service.SystemUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +14,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/test")
 public class TestController {
+
+    @Autowired
+    private SystemUserService systemUserService;
 
     @RequestMapping("")
     @ResponseBody
@@ -26,5 +32,11 @@ public class TestController {
         map.put("1", "11111111");
         map.put("2", "22222222");
         return map;
+    }
+
+    @RequestMapping("user")
+    @ResponseBody
+    public SystemUser findone(String id) {
+        return systemUserService.baseSelectByPrimaryKey(id);
     }
 }

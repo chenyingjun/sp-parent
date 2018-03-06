@@ -1,13 +1,9 @@
 package com.chenyingjun.sp.shiro.token.manager;
 
-import com.chenyingjun.sp.common.utils.SpringContextUtil;
 import com.chenyingjun.sp.core.entity.SystemUser;
-import com.chenyingjun.sp.shiro.session.CustomSessionManager;
-import com.chenyingjun.sp.shiro.token.SampleRealm;
 import com.chenyingjun.sp.shiro.token.ShiroToken;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 
 import java.util.List;
 
@@ -50,7 +46,7 @@ public class TokenManager {
      * @return
      */
     public static String getNickname() {
-        return getToken().getUsername();
+        return getToken().getNickName();
     }
 
     /**
@@ -102,7 +98,7 @@ public class TokenManager {
      * @return
      */
     public static SystemUser login(SystemUser user, Boolean rememberMe) {
-        ShiroToken token = new ShiroToken(user.getEmail(), user.getPassword());
+        ShiroToken token = new ShiroToken(user.getAccount(), user.getPassWord());
         token.setRememberMe(rememberMe);
         SecurityUtils.getSubject().login(token);
         return getToken();
