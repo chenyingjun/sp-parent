@@ -8,6 +8,11 @@ import java.util.Date;
 @Data
 public class SystemUser extends BaseEntity {
 
+    //0:禁止登录
+    public static final int STATUS_0 = 0;
+    //1:有效
+    public static final int STATUS_1 = 1;
+
     private String name;
 
     private String account;

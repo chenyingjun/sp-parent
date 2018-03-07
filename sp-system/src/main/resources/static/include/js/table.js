@@ -433,9 +433,9 @@ var table = function(requestUrl, formId, tableId, successFun, useCache) {
                 $("#" + tableId).parent().before(globalErrorHtml);
             }
         },
-        error: function() {
+        error: function(resp) {
 
-            var tfoot = '<tfoot><tr><th colspan="' + tdSize + '">加载失败，请重置查询条件</th></tr></tfoot>';
+            var tfoot = '<tfoot><tr><th colspan="' + tdSize + '">加载失败，请重置查询条</th></tr></tfoot>';
 
             $("#" + tableId).find("tfoot").remove();
 

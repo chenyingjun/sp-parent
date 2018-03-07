@@ -16,4 +16,7 @@ public class CommonConsts {
 
     /***项目根路径*/
     public static final String CONTEXT_PATH = "contextPath";
+
+    public static final int LOGIN_FAIL_NUM = 5;
 }
+

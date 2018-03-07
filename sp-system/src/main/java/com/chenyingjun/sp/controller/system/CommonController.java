@@ -1,5 +1,6 @@
 package com.chenyingjun.sp.controller.system;
 
+import com.chenyingjun.sp.common.constant.CommonConsts;
 import com.chenyingjun.sp.common.utils.IPUtil;
 import com.chenyingjun.sp.common.utils.LoggerUtils;
 import com.chenyingjun.sp.core.entity.SystemUser;
@@ -60,8 +61,9 @@ public class CommonController {
     @ResponseBody
     public Map<String,Object> submitLogin(SystemUser entity, Boolean rememberMe, HttpServletRequest request){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        SystemUser user = null;
         try {
-            SystemUser user = TokenManager.login(entity,rememberMe);
+            user = TokenManager.login(entity,rememberMe);
             resultMap.put("status", 200);
             resultMap.put("message", "登录成功");
 
@@ -93,19 +95,26 @@ public class CommonController {
             user.setLastIp(user.getLoginIp());
             String ip = IPUtil.getRequestIP(request);
             user.setLoginIp(ip);
-            try {
-                systemUserService.baseUpdateByPrimaryKeySelective(user);
-            }catch (Exception e) {
-                LoggerUtils.error(getClass(), "用户登录后信息更新失败，用户信息：" + user.toString());
-            }
+            user.setFailNum(0);
         } catch (DisabledAccountException e) {
             resultMap.put("status", 500);
             resultMap.put("message", "帐号已经禁用。");
         } catch (Exception e) {
             resultMap.put("status", 500);
             resultMap.put("message", "帐号或密码错误");
+            int failNum = user.getFailNum() + 1;
+            user.setFailNum(failNum);
+            if (failNum >= CommonConsts.LOGIN_FAIL_NUM) {
+                user.setStatus(SystemUser.STATUS_0);
+            }
         }
-
+        try {
+            if (null != user) {
+                systemUserService.baseUpdateByPrimaryKeySelective(user);
+            }
+        }catch (Exception e) {
+            LoggerUtils.error(getClass(), "用户登录后信息更新失败，用户信息：" + user.toString());
+        }
         return resultMap;
     }
 

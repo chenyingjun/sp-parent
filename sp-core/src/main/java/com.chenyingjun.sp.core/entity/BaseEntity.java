@@ -19,11 +19,6 @@ public class BaseEntity implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    //0:禁止登录
-    public static final Long STATUS_0 = new Long(0);
-    //1:有效
-    public static final Long STATUS_1 = new Long(1);
-
     //0:已删除
     public static final Long DEL_FLAG_0 = new Long(0);
     //1:可用

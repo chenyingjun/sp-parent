@@ -53,13 +53,13 @@
 				<h2>
 					<i class="fa fa-home"></i> 我的主页
 				</h2>
-				<div class="breadcrumb-wrapper">
-					<ol class="breadcrumb">
-						<li><a href="<%=path%>/main">业务管理系统</a></li>
-						<li class="active"><a
-							href="<%=path%>/main">我的主页</a></li>
-					</ol>
-				</div>
+				<#--<div class="breadcrumb-wrapper">-->
+					<#--<ol class="breadcrumb">-->
+						<#--<li><a href="<%=path%>/main">业务管理系统</a></li>-->
+						<#--<li class="active"><a-->
+							<#--href="<%=path%>/main">我的主页</a></li>-->
+					<#--</ol>-->
+				<#--</div>-->
 			</div>
 			<div class="contentpanel" style="position:static">
 				<div class="row">

@@ -56,7 +56,7 @@ public class SampleRealm extends AuthorizingRealm {
 		/**
 		 * 如果用户的status为禁用。那么就抛出<code>DisabledAccountException</code>
 		 */
-		}else if(BaseEntity.STATUS_0.equals(user.getStatus())){
+		}else if(SystemUser.STATUS_0 == user.getStatus().intValue()){
 			throw new DisabledAccountException("帐号已经禁止登录！");
 		}
 		return new SimpleAuthenticationInfo(user, user.getPassWord(), getName());
