@@ -63,7 +63,7 @@
 			</div>
 			<div class="contentpanel" style="position:static">
 				<div class="row">
-						<div class="col-md-2" style="position:absolute;right:0;bottom:0;">
+						<div class="col-md-3" style="position:absolute;right:0;bottom:0;">
 							<div class="panel panel-success panel-stat">
 								<div class="panel-heading">
 	

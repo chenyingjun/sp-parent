@@ -1,12 +1,15 @@
 package com.chenyingjun.sp.controller.system;
 
+import com.chenyingjun.sp.common.utils.IPUtil;
 import com.chenyingjun.sp.common.utils.LoggerUtils;
 import com.chenyingjun.sp.core.entity.SystemUser;
+import com.chenyingjun.sp.core.service.SystemUserService;
 import com.chenyingjun.sp.shiro.token.manager.TokenManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,9 @@ import java.util.Map;
 @RequestMapping("")
 public class CommonController {
 
+    @Autowired
+    SystemUserService systemUserService;
+
     @RequestMapping("login")
     public String login(Map<String,Object> model) {
         model.put("time",new Date());
@@ -32,18 +38,14 @@ public class CommonController {
     }
 
     @RequestMapping(value = "")
-    public String main(HttpServletRequest request, HttpServletResponse response, ModelMap map) {
-        return userMain(request, response, map);
+    public String main(ModelMap map) {
+        return userMain(map);
     }
 
     @RequestMapping(value = "main")
     public String userMain(ModelMap map) {
         Date date = new Date();
         map.put("nowTime", date);
-        SystemUser user = TokenManager.getToken();
-        user.setCreateDate(date);
-        user.setUpdateDate(date);
-        map.put("user", user);
         return "main";
     }
 
@@ -59,7 +61,7 @@ public class CommonController {
     public Map<String,Object> submitLogin(SystemUser entity, Boolean rememberMe, HttpServletRequest request){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         try {
-            TokenManager.login(entity,rememberMe);
+            SystemUser user = TokenManager.login(entity,rememberMe);
             resultMap.put("status", 200);
             resultMap.put("message", "登录成功");
 
@@ -84,6 +86,18 @@ public class CommonController {
             }
             //跳转地址
             resultMap.put("back_url", url);
+            //更新登录时间 last login time
+            user.setUpdateTime(new Date());
+            user.setLastTime(user.getLoginTime());
+            user.setLoginTime(new Date());
+            user.setLastIp(user.getLoginIp());
+            String ip = IPUtil.getRequestIP(request);
+            user.setLoginIp(ip);
+            try {
+                systemUserService.baseUpdateByPrimaryKeySelective(user);
+            }catch (Exception e) {
+                LoggerUtils.error(getClass(), "用户登录后信息更新失败，用户信息：" + user.toString());
+            }
         } catch (DisabledAccountException e) {
             resultMap.put("status", 500);
             resultMap.put("message", "帐号已经禁用。");

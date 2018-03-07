@@ -34,7 +34,7 @@
 			<div class="headerbar">
 
 				<a class="menutoggle"><i class="fa fa-bars"></i></a>
-				<#--<#include "../common/header-right.ftl"/>-->
+				<#include "../common/header-right.ftl"/>
 				<!-- header-right -->
 
 			</div>
@@ -141,7 +141,7 @@
 									<thead>
 										<tr>
 											<th>序号</th>
-											<th>用户名</th>
+											<th>姓名</th>
 											<th>昵称</th>
 											<th>角色</th>
 											<th>邮箱</th>

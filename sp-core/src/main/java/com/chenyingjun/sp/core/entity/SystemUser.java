@@ -45,4 +45,25 @@ public class SystemUser extends BaseEntity {
 
     public SystemUser(SystemUser user) {
     }
+
+    @Override
+    public String toString() {
+        return "SystemUser{" +
+                "name='" + name + '\'' +
+                ", account='" + account + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", sex='" + sex + '\'' +
+                ", failNum=" + failNum +
+                ", status=" + status +
+                ", loginTime=" + loginTime +
+                ", loginIp='" + loginIp + '\'' +
+                ", lastTime=" + lastTime +
+                ", lastIp='" + lastIp + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 }

@@ -21,6 +21,7 @@
 		</li>
 	</ul>
 </div>
+<#assign tokenUser=token.getToken()>
 <div class="modal fade bs-example-modal-lg" id="updateUserPwdModal"
 			tabindex="-1" role="dialog"
 			aria-labelledby="updateUserPwdModalLabel" aria-hidden="true">
@@ -37,7 +38,7 @@
 								data-option="edit" action="" class="form-horizontal"
 								method="post" accept-charset="UTF-8"
 								enctype="application/x-www-form-urlencoded">
-								<input type="hidden" name="id" id="updatePwdUserId" value="${user.id }">
+								<input type="hidden" name="id" id="updatePwdUserId" value="${tokenUser.id}">
 								<div class="panel panel-default">
 									<div class="panel-body">
 										<div class="form-group">
@@ -97,51 +98,51 @@
 						<div class="tab-content">
 							<form id="UserForm"action="" class="form-horizontal">
 								<div class="form-group">
-									<label class="col-sm-2 control-label">用户名：</label>
+									<label class="col-sm-2 control-label">昵称：</label>
 									<div class="col-sm-4">
 										<input type="text" name="nickName"
-											class="form-control" value="${user.username?default('未设置') }"  disabled="disabled"  />
+											class="form-control" value="${tokenUser.nickName?default('未设置') }"  disabled="disabled"  />
 									</div>
 									<label class="col-sm-2 control-label">姓名：</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" 
-										value="${user.name?default('未设置') }"  disabled="disabled"  />
+										value="${tokenUser.name?default('未设置') }"  disabled="disabled"  />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">手机号码：</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control"
-										value="${user.phone?default('未设置') }"  disabled="disabled"  />
+										value="${tokenUser.phone?default('未设置') }"  disabled="disabled"  />
 									</div>
 									<label class="col-sm-2 control-label">邮箱：</label>
 									<div class="col-sm-4">
 										<input type="text" class="form-control" 
-										value="${user.email?default('未设置') }"  disabled="disabled"  />
+										value="${tokenUser.email?default('未设置') }"  disabled="disabled"  />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">性别：</label>
 									<div class="col-sm-4">
-										<#--<select id="sex" name="sex" class="select2"  disabled="disabled" >-->
-											<#--<option value="1" <c:if test="${user.sex == 'male' }"> selected="selected" </c:if>>男</option>-->
-											<#--<option value="2" <c:if test="${user.sex == 'female' }"> selected="selected" </c:if>>女</option>-->
-										<#--</select>-->
+										<select name="sex" class="select2"  disabled="disabled" >
+											<option value="1" <#if tokenUser.sex == '1'> selected="selected" </#if>>男</option>
+											<option value="2" <#if tokenUser.sex == '2'> selected="selected" </#if>>女</option>
+										</select>
 									</div>
 									<label class="col-sm-2 control-label">状态：</label>
 									<div class="col-sm-4">
-										<#--<select id="userStatus" name="userStatus" class="select2"-->
-											<#--disabled="disabled" >-->
-											<#--<option value="1" <c:if test="${user.status == '1' }"> selected="selected" </c:if>>可用</option>-->
-											<#--<option value="2" <c:if test="${user.status == '0' }"> selected="selected" </c:if>>禁用</option>-->
-										<#--</select>-->
+										<select name="userStatus" class="select2"
+											disabled="disabled" >
+											<option value="1" <#if tokenUser.status == 1 > selected="selected" </#if>>可用</option>
+											<option value="0" <#if tokenUser.status == 0 > selected="selected" </#if>>禁用</option>
+										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">连续登录失败次数：</label>
 									<div class="col-sm-4">
 										<input type="text" disabled="disabled"
-											value="${user.failNum?default('未设置') }"
+											value="${tokenUser.failNum?default('未设置') }"
 											class="form-control" />
 									</div>
 								</div>
@@ -149,13 +150,13 @@
 									<label class="col-sm-2 control-label">创建时间：</label>
 									<div class="col-sm-4">
 										<input type="text" disabled="disabled"
-											value="${user.createDate?string('yyyy-MM-dd HH:mm:ss')}"
+											value="${tokenUser.createTime?string('yyyy-MM-dd HH:mm:ss')}"
 											class="form-control" />
 									</div>
 									<label class="col-sm-2 control-label">修改时间：</label>
 									<div class="col-sm-4">
 										<input type="text" disabled="disabled"
-											value="${user.updateDate?string('yyyy-MM-dd HH:mm:ss')}"
+											value="${tokenUser.updateTime?string('yyyy-MM-dd HH:mm:ss')}"
 											class="form-control" />
 									</div>
 								</div>
@@ -165,3 +166,16 @@
 				</div>
 			</div>
 		</div>
+<script type="text/javascript">
+    /*
+     * 加载数据函数
+     */
+    $(function($) {
+        // Select2
+        jQuery(".select2").select2({
+            width : '100%',
+            minimumResultsForSearch : -1
+        });
+
+    });
+</script>

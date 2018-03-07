@@ -4,6 +4,7 @@ import com.chenyingjun.sp.core.entity.BaseEntity;
 import com.chenyingjun.sp.core.entity.SystemUser;
 import com.chenyingjun.sp.core.service.SystemUserService;
 import com.chenyingjun.sp.shiro.token.manager.TokenManager;
+import freemarker.template.TemplateModelException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -33,6 +34,11 @@ public class SampleRealm extends AuthorizingRealm {
 	OrgService roleService;*/
 	@Autowired
 	SystemUserService systemUserService;
+
+	/** x */
+	@Autowired
+	private freemarker.template.Configuration freeMarkerConfiguration;
+
 	public SampleRealm() {
 		super();
 	}
@@ -52,12 +58,6 @@ public class SampleRealm extends AuthorizingRealm {
 		 */
 		}else if(BaseEntity.STATUS_0.equals(user.getStatus())){
 			throw new DisabledAccountException("帐号已经禁止登录！");
-		}else{
-			//更新登录时间 last login time
-//			user.setUpdateDate(new Date());
-			user.setLastTime(user.getLoginTime());
-			user.setLoginTime(new Date());
-			systemUserService.baseUpdateByPrimaryKeySelective(user);
 		}
 		return new SimpleAuthenticationInfo(user, user.getPassWord(), getName());
     }
