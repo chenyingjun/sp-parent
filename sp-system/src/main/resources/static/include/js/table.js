@@ -42,7 +42,7 @@ $(function($) {
 });
 
 // 定义分页对象
-var table = function(requestUrl, formId, tableId, successFun, useCache) {
+var table = function(requestUrl, formId, tableId, operHtml, useCache) {
 
     // 防止重复提交
     var hand = $("#" + tableId).attr("data-hand");
@@ -174,7 +174,7 @@ var table = function(requestUrl, formId, tableId, successFun, useCache) {
 
                             if (size > 0) {
 
-                                successFun(data);
+                                successFun(data, operHtml);
 
                             } else {
 

@@ -140,7 +140,6 @@
                             <table class="table table-striped" id="systemuserTable">
                                 <thead>
                                 <tr>
-                                    <th>序号</th>
                                     <th td-name="name">姓名</th>
                                     <th td-name="nickName">昵称</th>
                                     <th td-name="roleName">角色</th>
@@ -171,7 +170,7 @@
      * 加载列表函数
      * @param data 分页对象包含的信息列表
      */
-    var successFun = function (data) {
+    var successFun = function (data, operHtml) {
         var table = $("#systemuserTable");
         table.find("tbody").remove();
         var thList = table.find("thead").find("th");
@@ -187,18 +186,22 @@
                     var value = data[i][tdName] == undefined ? ""
                             : data[i][tdName];
                     tbody = tbody + '<td>' + value + '</td>';
-                } else {
-                    tbody = tbody + '<td></td>';
                 }
             });
 
-            tbody = tbody
-                    + '<td><a title="编辑" href='
+            var operHtml = '<td><a title="编辑" href='
                     + path
                     + '/systemuser/id?id='
-                    + data[i].id
+                    + 'data[i].id'
                     + '> <i class="fa fa-pencil"></i></a></td>';
 
+            if (operHtml) {
+                tbody = tbody + '<td><a title="编辑" href='
+                        + path
+                        + '/systemuser/id?id='
+                        + c(data[i], 'data[i].id')
+                        + '> <i class="fa fa-pencil"></i></a></td>';
+            }
             tbody = tbody + '</tr>';
         }
 
@@ -207,14 +210,38 @@
         $("#systemuserTable").append(tbody);
 
     };
-
-    /*
+    function c (parent, child) {
+        //判断该变量是否存在
+        let childArray = child.split('.')
+        let isExist = true
+        let temporary = ''
+        for (let i = 0; i < childArray.length; i++) {
+            if (i === 0) {
+                temporary = parent
+            } else {
+                temporary = temporary[childArray[i]]
+            }
+            if (!temporary) {
+                isExist = false
+                break
+            }
+        }
+        if (isExist) {
+            return temporary
+        }
+        return ''
+    }
+     /*
      * 加载数据函数
      */
     $(function ($) {
 
         table(path + "/systemuser/page", "serachForm",
-                "systemuserTable", successFun, true);
+                "systemuserTable", '<td><a title="编辑" href='
+                        + path
+                        + '/systemuser/id?id='
+                        + '[(data[i].id)]'
+                        + '> <i class="fa fa-pencil"></i></a></td>', true);
 
         jQuery("#serachForm").validate(
                 {
