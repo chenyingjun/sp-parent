@@ -167,89 +167,19 @@
 </section>
 <script type="text/javascript">
     /*
-     * 加载列表函数
-     * @param data 分页对象包含的信息列表
-     */
-    var successFun = function (data, operHtml) {
-        var table = $("#systemuserTable");
-        table.find("tbody").remove();
-        var thList = table.find("thead").find("th");
-
-        var tbody = '<tbody>';
-
-        for (i in data) {
-
-            tbody = tbody + '<tr>';
-            thList.each(function(){
-                var tdName = $(this).attr('td-name');
-                if (tdName) {
-                    var value = data[i][tdName] == undefined ? ""
-                            : data[i][tdName];
-                    tbody = tbody + '<td>' + value + '</td>';
-                }
-            });
-
-            var operHtml = '<td><a title="编辑" href='
-                    + path
-                    + '/systemuser/id?id='
-                    + 'data[i].id'
-                    + '> <i class="fa fa-pencil"></i></a></td>';
-
-            if (operHtml) {
-                tbody = tbody + '<td><a title="编辑" href='
-                        + path
-                        + '/systemuser/id?id='
-                        + c(data[i], 'data[i].id')
-                        + '> <i class="fa fa-pencil"></i></a></td>';
-            }
-            tbody = tbody + '</tr>';
-        }
-
-        tbody = tbody + '</tbody>';
-
-        $("#systemuserTable").append(tbody);
-
-    };
-    function c (parent, child) {
-        //判断该变量是否存在
-        let childArray = child.split('.')
-        let isExist = true
-        let temporary = ''
-        for (let i = 0; i < childArray.length; i++) {
-            if (i === 0) {
-                temporary = parent
-            } else {
-                temporary = temporary[childArray[i]]
-            }
-            if (!temporary) {
-                isExist = false
-                break
-            }
-        }
-        if (isExist) {
-            return temporary
-        }
-        return ''
-    }
-     /*
-     * 加载数据函数
-     */
-    $(function ($) {
+    * 加载数据函数
+    */
+    $(function () {
 
         table(path + "/systemuser/page", "serachForm",
-                "systemuserTable", '<td><a title="编辑" href='
-                        + path
-                        + '/systemuser/id?id='
-                        + '[(data[i].id)]'
-                        + '> <i class="fa fa-pencil"></i></a></td>', true);
+                "systemuserTable", oper, true);
 
         jQuery("#serachForm").validate(
                 {
-
                     rules: {},
                     submitHandler: function () {
                         table(path + "/systemuser/page", "serachForm",
-                                "systemuserTable", successFun, false);
+                                "systemuserTable", oper, false);
                     },
                     unhighlight: function (element) {
                         jQuery(element).parent().removeClass('has-error');
@@ -264,6 +194,14 @@
                     }
                 });
     });
+
+    var oper = function(data) {
+        return '<td><a title="编辑" href='
+                + path
+                + '/systemuser/id?id='
+                + data.id
+                + '> <i class="fa fa-pencil"></i></a></td>'
+    }
 </script>
 
 </body>

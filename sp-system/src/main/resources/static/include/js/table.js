@@ -41,8 +41,15 @@ $(function($) {
     });
 });
 
-// 定义分页对象
-var table = function(requestUrl, formId, tableId, operHtml, useCache) {
+/**
+ * 定义分页对象
+ * @param requestUrl 请求链接
+ * @param formId form表单id
+ * @param tableId table表单id
+ * @param oper table表单里td后继html值
+ * @param useCache 是否使用页面缓存
+ */
+var table = function(requestUrl, formId, tableId, oper, useCache) {
 
     // 防止重复提交
     var hand = $("#" + tableId).attr("data-hand");
@@ -174,7 +181,7 @@ var table = function(requestUrl, formId, tableId, operHtml, useCache) {
 
                             if (size > 0) {
 
-                                successFun(data, operHtml);
+                                successFun(tableId, data, oper);
 
                             } else {
 
@@ -443,3 +450,83 @@ var table = function(requestUrl, formId, tableId, operHtml, useCache) {
         }
     });
 };
+/*
+     * 加载列表函数
+     * @param tableId table表id
+     * @param data 分页对象包含的信息列表
+     * @param operHtml 标签后继的html
+     */
+var successFun = function (tableId, data, oper) {
+    var table = $("#" + tableId);
+    table.find("tbody").remove();
+    var thList = table.find("thead").find("th");
+
+    var tbody = '<tbody>';
+
+    for (i in data) {
+        tbody = tbody + '<tr>';
+        thList.each(function () {//根据标题中的td-name值填充后面列表内容
+            var tdName = $(this).attr('td-name');
+            if (tdName) {
+                var value = data[i][tdName] == undefined ? ""
+                    : data[i][tdName];
+                tbody = tbody + '<td>' + value + '</td>';
+            }
+        });
+
+        if (oper) {
+            operHtml = oper(data[i]);
+            tbody = tbody + operHtml;
+        }
+        tbody = tbody + '</tr>';
+    }
+
+    tbody = tbody + '</tbody>';
+
+    $("#" + tableId).append(tbody);
+
+};
+
+/**
+ * 替代对象  暂无使用此方法
+ * @param parent 替代的对象
+ * @param child 要被替代的字符串
+ * @returns 替代后的结果
+ */
+function replaceObj(parent, child) {
+    //判断该变量是否存在
+    var childArray = child.split('.')
+    var isExist = true
+    var temporary = ''
+    for (var i = 0; i < childArray.length; i++) {
+        if (i === 0) {
+            temporary = parent
+        } else {
+            temporary = temporary[childArray[i]]
+        }
+        if (!temporary) {
+            isExist = false
+            break
+        }
+    }
+    if (isExist) {
+        return temporary
+    }
+    return ''
+}
+
+/*
+替代html里面的对象信息     暂无使用此方法
+ */
+function replaceOper(operHtml, data) {
+    var regx = /【#[^#】]*#】/;
+    var oper = regx.exec(operHtml);
+    if (oper) {
+        var repOper = oper[0].replace("【#", "").replace("#】", "");
+        var value = replaceObj(data, repOper);
+        operHtml = operHtml.replace(oper[0], value);
+        return replaceOper(operHtml, data);
+    } else {
+        return operHtml;
+    }
+}
