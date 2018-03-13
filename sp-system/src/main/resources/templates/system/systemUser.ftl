@@ -198,7 +198,7 @@
     var oper = function(data) {
         return '<td><a title="编辑" href='
                 + path
-                + '/systemuser/id?id='
+                + '/systemuser/'
                 + data.id
                 + '> <i class="fa fa-pencil"></i></a></td>'
     }

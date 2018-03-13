@@ -12,6 +12,8 @@ import java.text.ParseException;
 @Data
 public class SystemUserPageVo {
 
+    private String id;
+
     private String name;
 
     private String nickName;

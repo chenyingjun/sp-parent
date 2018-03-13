@@ -59,7 +59,7 @@ public class SampleRealm extends AuthorizingRealm {
 		}else if(SystemUser.STATUS_0 == user.getStatus().intValue()){
 			throw new DisabledAccountException("帐号已经禁止登录！");
 		}
-		return new SimpleAuthenticationInfo(user, user.getPassWord(), getName());
+		return new SimpleAuthenticationInfo(user, token.getPswd(), getName());
     }
 
 	 /** 

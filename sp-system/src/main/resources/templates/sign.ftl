@@ -62,7 +62,7 @@
                          id="verifyCodeImg"
                          style="width: auto; height: 38px; float: right; margin-top: -40px;" />
                 </c:if>-->
-                <button class="btn btn-success btn-block" type="button" id="login" onclick="javascript:">登录</button>
+                <button class="btn btn-success btn-block" type="button" id="login">登录</button>
                 </form>
             </div>
             <!-- col-sm-5 -->

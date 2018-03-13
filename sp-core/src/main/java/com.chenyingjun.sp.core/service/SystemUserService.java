@@ -4,6 +4,7 @@ import com.chenyingjun.sp.core.dto.SystemUserPageFind;
 import com.chenyingjun.sp.core.entity.SystemUser;
 import com.chenyingjun.sp.core.mapper.SystemUserMapper;
 import com.chenyingjun.sp.core.vo.SystemUserPageVo;
+import com.chenyingjun.sp.core.vo.SystemUserVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,9 @@ public class SystemUserService extends BaseService<SystemUser>{
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("account", account);
         map.put("passWord", passWord);
-        return systemUserMapper.login(map);
+        SystemUser user = systemUserMapper.login(map);
+        user.setPassWord(null);
+        return user;
     }
 
     /**
@@ -46,5 +49,17 @@ public class SystemUserService extends BaseService<SystemUser>{
     public PageInfo<SystemUser> page(SystemUserPageFind find, int pageNum, int pageSize) {
         List<SystemUserPageVo> list = systemUserMapper.page(find);
         return this.basePageByExample(list, pageNum, pageSize);
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param id 查询信息主键
+     * @return 组织列表
+     */
+    public SystemUserVo info(String id) {
+        SystemUserVo user = systemUserMapper.info(id);
+        user.setPassWord(null);
+        return user;
     }
 }

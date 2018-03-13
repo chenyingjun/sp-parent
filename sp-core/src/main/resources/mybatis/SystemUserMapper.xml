@@ -22,6 +22,7 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>
   <resultMap id="pageResultMap" type="com.chenyingjun.sp.core.vo.SystemUserPageVo">
+    <result column="id" jdbcType="VARCHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
     <result column="email" jdbcType="VARCHAR" property="email" />
@@ -31,6 +32,9 @@
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+  </resultMap>
+
+  <resultMap id="infoResultMap" type="com.chenyingjun.sp.core.vo.SystemUserVo" extends="BaseResultMap">
   </resultMap>
   <sql id="Base_Column_List">
     id, name, account, nick_name, pass_word, email, phone, sex, fail_num, del_flag, status, 
@@ -44,9 +48,16 @@
     where account = #{account,jdbcType=VARCHAR} and  pass_word = #{passWord,jdbcType=VARCHAR}
   </select>
 
+  <select id="info" resultMap="infoResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from SYSTEM_USER
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
   <select id="page" resultMap="pageResultMap" parameterType="com.chenyingjun.sp.core.dto.SystemUserPageFind">
     SELECT
-    name, nick_name, email, phone, sex, fail_num, status,
+    id, name, nick_name, email, phone, sex, fail_num, status,
     create_time, update_time
     FROM SYSTEM_USER su
     <where>
