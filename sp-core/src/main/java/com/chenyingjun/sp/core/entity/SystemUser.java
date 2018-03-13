@@ -1,5 +1,6 @@
 package com.chenyingjun.sp.core.entity;
 
+import com.chenyingjun.sp.common.enums.StatusType;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,9 +10,9 @@ import java.util.Date;
 public class SystemUser extends BaseEntity {
 
     //0:禁止登录
-    public static final int STATUS_0 = 0;
+    public static final int STATUS_0 = Integer.parseInt(StatusType.STATUS_0.getKey());
     //1:有效
-    public static final int STATUS_1 = 1;
+    public static final int STATUS_1 = Integer.parseInt(StatusType.STATUS_1.getKey());
 
     private String name;
 

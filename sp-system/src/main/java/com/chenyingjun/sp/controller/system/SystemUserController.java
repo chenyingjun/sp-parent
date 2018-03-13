@@ -1,6 +1,7 @@
 package com.chenyingjun.sp.controller.system;
 
 
+import com.chenyingjun.sp.core.dto.SystemUserPageFind;
 import com.chenyingjun.sp.core.entity.SystemUser;
 import com.chenyingjun.sp.core.service.SystemUserService;
 import com.github.pagehelper.PageInfo;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/systemuser")
@@ -30,8 +33,8 @@ public class SystemUserController {
 
     @RequestMapping("page")
     @ResponseBody
-    public PageInfo<SystemUser> page(@RequestParam int pageNum, @RequestParam int
+    public PageInfo<SystemUser> page(@Valid SystemUserPageFind find, @RequestParam int pageNum, @RequestParam int
             pageSize) {
-        return systemUserService.page(pageNum, pageSize);
+        return systemUserService.page(find, pageNum, pageSize);
     }
 }

@@ -24,6 +24,11 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>com.chenyingjun.sp</groupId>
+            <artifactId>sp-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- 代码直接调用log4j会被桥接到slf4j -->
         <dependency>
             <groupId>org.slf4j</groupId>

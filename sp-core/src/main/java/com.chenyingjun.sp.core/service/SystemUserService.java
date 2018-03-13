@@ -1,7 +1,9 @@
 package com.chenyingjun.sp.core.service;
 
+import com.chenyingjun.sp.core.dto.SystemUserPageFind;
 import com.chenyingjun.sp.core.entity.SystemUser;
 import com.chenyingjun.sp.core.mapper.SystemUserMapper;
+import com.chenyingjun.sp.core.vo.SystemUserPageVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +43,8 @@ public class SystemUserService extends BaseService<SystemUser>{
      * @param pageSize 每页数量
      * @return 组织列表
      */
-    public PageInfo<SystemUser> page(int pageNum, int pageSize) {
-        List<SystemUser> list = systemUserMapper.selectAll();
+    public PageInfo<SystemUser> page(SystemUserPageFind find, int pageNum, int pageSize) {
+        List<SystemUserPageVo> list = systemUserMapper.page(find);
         return this.basePageByExample(list, pageNum, pageSize);
     }
 }

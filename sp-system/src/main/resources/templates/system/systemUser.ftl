@@ -136,7 +136,7 @@
                     <!-- panel-heading -->
                     <div class="panel-body">
                         <div class="table-responsive"
-                             style="position: relative; min-height: 100px;overflow: scroll;margin-bottom: 10px;">
+                             style="position: relative; min-height: 100px;overflow: overlay;margin-bottom: 10px;">
                             <table class="table table-striped" id="systemuserTable">
                                 <thead>
                                 <tr>

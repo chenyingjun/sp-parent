@@ -219,6 +219,19 @@ public class DateUtils {
 
 	/**
 	 *
+	 * 功能描述：根据指定格式解析日期格式
+	 *@param dateStr
+	 *@param formatStr
+	 *@return
+	 *@throws ParseException
+	 */
+	public static String parseToFormatStr(String dateStr, String formatStr) throws ParseException {
+		Date date = parseToFormatDate(dateStr, formatStr);
+		return dateFormat(date, formatStr);
+	}
+
+	/**
+	 *
 	 * 功能描述:日期类型转换字符串
 	 * @param date
 	 * @param fmt
