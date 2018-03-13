@@ -129,7 +129,7 @@
 										<div class="col-sm-4">
 											<div class="input-group">
 											<input type="text" id="failNum" name="failNum"
-												value="${(user.failNum)! }" class="form-control"
+												value="${(user.failNum)?default(0) }" class="form-control"
 												maxlength="1" placeholder="请输入连续登录失败次数" />
 											<span class="input-group-addon">次</span>
 											</div> <label class="error" for="failNum"></label>
@@ -153,9 +153,9 @@
 										<label class="col-sm-2 control-label">所属角色<span
 												class="asterisk">*</span></label>
 										<div class="col-sm-4">
-											<#--<input type="text" id="roleIds" name="roleIds" value="${roleIds }"
+											<input type="text" id="roleId" name="roleId" value="${roleId! }"
 												class="js-data-example-ajax mg-bm10" maxlength="32" required
-												placeholder="请选择所属角色" /><label class="error" for="roleIds"></label>-->
+												placeholder="请选择所属角色" /><label class="error" for="roleId"></label>
 										</div>
 									</div>
 									<#if user??>
@@ -264,29 +264,29 @@
 			});
 			
 			//加载角色信息
-			jQuery("#roleIds").select2({
+			jQuery("#roleId").select2({
 				width : '100%',
 				language : 'zh-CN',
 				placeholder : "输入角色名解锁",
-				minimumInputLength : 0,
+                maximumSelectionSize : 1,
 				allowClear : true,
 				dropdownCssClass : "bigdrop",
 				multiple : true,
 				tags: true,
 				initSelection : function(element, callback) { // 初始化时设置默认值
-					var ids = $(element).val();
+					var id = $(element).val();
 
-					if (ids.length > 0) {
+					if (id.length > 0) {
 
 						$.ajax({
 							type : 'GET',
-							url : path + "/systemrole/data/ids?ids=" + ids,
+							url : path + "/systemrole/data/" + id,
 							dataType : "json",
 							data : null,
 							cache : false,
 							async : true,
 							success : function(resp) {
-								callback(resp.t);
+								callback(resp.data);
 							}
 						});
 					}
@@ -313,16 +313,17 @@
 							}
 						}
 					},
-					results : function(data, pageNum) {
-						if (data) {
-							var more = (pageNum * 15) < data.t.total; //用来判断是否还有更多数据可以加载
+					results : function(resp, pageNum) {
+						if (resp) {
+                            var data = resp.data;
+							var more = (pageNum * 15) < data.total; //用来判断是否还有更多数据可以加载
 							return {
-								results : data.t.list,
+								results : data.list,
 								more : more
 							};
 						} else {
 							return {
-								results : data.t.list
+								results : resp.list
 							};
 						}
 					},

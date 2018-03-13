@@ -52,7 +52,7 @@ public class SystemUserService extends BaseService<SystemUser>{
     }
 
     /**
-     * 分页查询
+     * 根据主键查询用户信息
      *
      * @param id 查询信息主键
      * @return 组织列表

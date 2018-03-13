@@ -1,10 +1,9 @@
 package com.chenyingjun.sp.controller.system;
 
 
-import com.chenyingjun.sp.core.dto.SystemUserPageFind;
-import com.chenyingjun.sp.core.entity.SystemUser;
-import com.chenyingjun.sp.core.service.SystemUserService;
-import com.chenyingjun.sp.core.vo.SystemUserVo;
+import com.chenyingjun.sp.core.dto.SystemRolePageFind;
+import com.chenyingjun.sp.core.entity.SystemRole;
+import com.chenyingjun.sp.core.service.SystemRoleService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,38 +16,38 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/systemuser")
-public class SystemUserController {
+@RequestMapping("/systemrole")
+public class SystemRoleController {
 
     @Autowired
-    private SystemUserService systemUserService;
+    private SystemRoleService systemRoleService;
     /**
      *
      * @Title: goPage
      * @Description: 进入列表页面
-     * @return 系统用户信息页面
+     * @return 系统角色列表信息页面
      */
     @RequestMapping(value = "/")
     public String goPage() {
-        return "system/systemUser";
+        return "system/systemRole";
     }
 
     /**
      *
      * 进入新增系统用户页面
-     * @return 系统用户信息页面
+     * @return 系统角色信息页面
      */
     @RequestMapping(value = "/add")
     public String add() {
-        return "system/systemUserEdit";
+        return "system/systemRoleEdit";
     }
 
 
     @RequestMapping("page")
     @ResponseBody
-    public PageInfo<SystemUser> page(@Valid SystemUserPageFind find, @RequestParam int pageNum, @RequestParam int
+    public PageInfo<SystemRole> page(@Valid SystemRolePageFind find, @RequestParam int pageNum, @RequestParam int
             pageSize) {
-        return systemUserService.page(find, pageNum, pageSize);
+        return systemRoleService.page(find, pageNum, pageSize);
     }
 
     /**
@@ -58,10 +57,19 @@ public class SystemUserController {
      */
     @RequestMapping("{id}")
     public String info(@PathVariable String id, ModelMap map) {
-        SystemUserVo user = systemUserService.info(id);
-        map.put("user", user);
-        map.put("roleId", "11");
-        return "system/systemUserEdit";
+        SystemRole role = systemRoleService.info(id);
+        map.put("role", role);
+        return "system/systemRoleEdit";
     }
 
+    /**
+     * 根据主键查询用户信息
+     * @param id 用户主键
+     * @return 用户信息
+     */
+    @RequestMapping("data/{id}")
+    @ResponseBody
+    public SystemRole dataId(@PathVariable String id) {
+        return systemRoleService.info(id);
+    }
 }
