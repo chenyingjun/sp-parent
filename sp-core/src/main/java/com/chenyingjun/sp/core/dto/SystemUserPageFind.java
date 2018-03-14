@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class SystemUserPageFind implements Serializable {
@@ -29,4 +30,6 @@ public class SystemUserPageFind implements Serializable {
     @Pattern(regexp = "([1-2]{1}[0-9]{3})((1[0-2]{1})|(0[1-9]{1}))((0[1-9]{1})|([1-2]{1}[0-9]{1})|(3[0-1]{1}))",
             message = "{data.input}")
     private String endTime;
+
+    private List<String> roleIds;
 }

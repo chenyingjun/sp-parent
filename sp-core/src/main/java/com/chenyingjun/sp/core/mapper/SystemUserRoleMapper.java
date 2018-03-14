@@ -19,4 +19,6 @@ public interface SystemUserRoleMapper {
     int updateByExample(@Param("record") SystemUserRoleKey record, @Param("example") SystemUserRoleExample example);
 
     List<SystemUserRoleKey> listByUserId(String userId);
+
+    int deleteByUserId(String userId);
 }

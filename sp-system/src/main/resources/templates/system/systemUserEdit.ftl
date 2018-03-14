@@ -61,7 +61,7 @@
 									<div class="form-group">
 										<label class="col-sm-2 control-label">用户主键</label>
 										<div class="col-sm-4">
-											<input type="text" id="id" name="id"
+											<input type="text" id="userId" name="userId"
 												class="form-control" readonly="readonly"
 												value="${(user.id)! }" />
 										</div>

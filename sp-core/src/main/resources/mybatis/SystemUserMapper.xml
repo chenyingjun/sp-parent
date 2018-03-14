@@ -32,6 +32,7 @@
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="rolesName" jdbcType="VARCHAR" property="rolesName" />
   </resultMap>
 
   <resultMap id="infoResultMap" type="com.chenyingjun.sp.core.vo.SystemUserVo" extends="BaseResultMap">
@@ -57,10 +58,12 @@
 
   <select id="page" resultMap="pageResultMap" parameterType="com.chenyingjun.sp.core.dto.SystemUserPageFind">
     SELECT
-    id, name, nick_name, email, phone, sex, fail_num, status,
-    create_time, update_time
-    FROM SYSTEM_USER su
+    su.id, su.name, su.nick_name, su.email, su.phone, su.sex, su.fail_num, su.status,
+    su.create_time, su.update_time, group_concat(sr.name) as rolesName
+    FROM SYSTEM_USER su, system_user_role sur, system_role sr
     <where>
+      AND su.id = sur.user_id
+      AND sur.role_id = sr.id
       <if test="name != null">
         AND su.NAME like concat('%',#{name, jdbcType=VARCHAR},'%')
       </if>
@@ -81,6 +84,12 @@
       </if>
       <if test="endTime != null">
         AND su.create_time &lt;= #{endTime, jdbcType=TIMESTAMP}
+      </if>
+      <if test="roleIds != null">
+        AND sur.role_id in
+        <foreach item="item" index="index" collection="roleIds" open="(" separator="," close=")">
+          #{item}
+        </foreach>
       </if>
     </where>
   </select>
@@ -119,5 +128,6 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
+    WHERE id = #{userId, jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -72,11 +72,11 @@
                                         <option value="500">500</option>
                                     </select><label class="error" for="pageSize"></label>
                                 </div>
-                                <div class="col-sm-1">
-                                    <input type="text" id="roleId" name="roleId"
-                                           class="form-control mg-bm10" maxlength="32"
+                                <div class="col-sm-2">
+                                    <input type="text" id="roleIds" name="roleIds"
+                                           class="js-data-example-ajax mg-bm10" maxlength="32"
                                            placeholder="用户角色"/><label class="error"
-                                                                      for="roleId"></label>
+                                                                      for="roleIds"></label>
                                 </div>
                                 <div class="col-sm-1">
                                     <input type="text" id="name" name="name"
@@ -142,7 +142,7 @@
                                 <tr>
                                     <th td-name="name">姓名</th>
                                     <th td-name="nickName">昵称</th>
-                                    <th td-name="roleName">角色</th>
+                                    <th td-name="rolesName">角色</th>
                                     <th td-name="email">邮箱</th>
                                     <th td-name="phone">手机号</th>
                                     <th td-name="sex">性别</th>
@@ -193,6 +193,83 @@
                                 .addClass('has-success');
                     }
                 });
+
+        //加载角色信息
+        jQuery("#roleIds").select2({
+            width : '100%',
+            language : 'zh-CN',
+            placeholder : "输入角色名解锁",
+            maximumSelectionSize : 10,
+            allowClear : true,
+            dropdownCssClass : "bigdrop",
+            multiple : true,
+            tags: true,
+            initSelection : function(element, callback) { // 初始化时设置默认值
+                var ids = $(element).val();
+
+                if (ids.length > 0) {
+
+                    $.ajax({
+                        type : 'GET',
+                        url : path + "/systemrole/data/ids?ids=" + ids,
+                        dataType : "json",
+                        data : null,
+                        cache : false,
+                        async : true,
+                        success : function(resp) {
+                            callback(resp.data);
+                        }
+                    });
+                }
+            },
+            ajax : {
+                url : path + "/systemrole/page",
+                dataType : 'json',
+                delay : 250,
+                type : 'GET',
+                data : function(term, pageNum) {
+                    term = $.trim(term);
+                    if (term && term.length > 0) {
+                        return {
+                            name : term,
+                            roleStatus : 1,
+                            pageSize : 15,
+                            pageNum : pageNum || 1,
+                        }
+                    } else {
+                        return {
+                            roleStatus : 1,
+                            pageSize : 15,
+                            pageNum : pageNum || 1,
+                        }
+                    }
+                },
+                results : function(resp, pageNum) {
+                    if (resp) {
+                        var data = resp.data;
+                        var more = (pageNum * 15) < data.total; //用来判断是否还有更多数据可以加载
+                        return {
+                            results : data.list,
+                            more : more
+                        };
+                    } else {
+                        return {
+                            results : resp.list
+                        };
+                    }
+                },
+                cache : true
+            },
+            formatResult : function(obj) {
+                return obj.name;
+            },
+            formatSelection : function(obj) {
+                return obj.name;
+            },
+            escapeMarkup : function(m) {
+                return m;
+            }
+        });
     });
 
     var oper = function(data) {

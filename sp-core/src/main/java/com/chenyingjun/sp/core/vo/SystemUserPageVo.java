@@ -32,6 +32,8 @@ public class SystemUserPageVo {
 
     private String updateTime;
 
+    private String rolesName;
+
     public void setSex(String sex) {
         this.sex = SexType.getName(sex);
     }

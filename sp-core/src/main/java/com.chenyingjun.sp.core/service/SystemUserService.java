@@ -32,6 +32,9 @@ public class SystemUserService extends BaseService<SystemUser>{
     @Autowired
     private SystemUserMapper systemUserMapper;
 
+    @Autowired
+    private SystemUserRoleService systemUserRoleService;
+
     public SystemUser login(String account, String passWord) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("account", account);
@@ -76,6 +79,9 @@ public class SystemUserService extends BaseService<SystemUser>{
         } else {
 
         }
+        String userId = edit.getUserId();
+        List<String> roleIds = edit.getRoleIds();
+        systemUserRoleService.insert(userId, roleIds);
         return systemUserMapper.edit(edit);
     }
 }

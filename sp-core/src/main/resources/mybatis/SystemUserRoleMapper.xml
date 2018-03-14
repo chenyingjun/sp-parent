@@ -90,4 +90,9 @@
     from system_user_role
     where user_id = #{userId, jdbcType=VARCHAR}
   </select>
+  <delete id="deleteByUserId" parameterType="java.lang.String">
+    delete from system_user_role
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+
 </mapper>

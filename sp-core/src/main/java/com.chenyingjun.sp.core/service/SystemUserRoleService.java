@@ -49,4 +49,18 @@ public class SystemUserRoleService extends BaseService<SystemRole>{
         }
         return systemUserRoleMapper.listByUserId(userId);
     }
+
+    public void insert(String userId, List<String> roleIds) {
+        deleteByUserId(userId);
+        if (roleIds == null || roleIds.size() <= 0) {
+            return;
+        }
+        for (String roleId: roleIds) {
+            systemUserRoleMapper.insert(new SystemUserRoleKey(userId, roleId));
+        }
+    }
+
+    public int deleteByUserId(String userId) {
+        return systemUserRoleMapper.deleteByUserId(userId);
+    }
 }
