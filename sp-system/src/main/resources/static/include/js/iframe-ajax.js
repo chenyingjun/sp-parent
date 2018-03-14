@@ -5,9 +5,40 @@ var editTimmer = null;
 
 var iframeRequest = false;
 
-var customSubmitHandler = function(form) {
+//参数组装
+function findOfEditParam(id) {
+    var paramInput = $("#" + id).find("input,select,textarea");
+    var param = {};
+    $(paramInput).each(function() {
+        var name = $(this).attr("name");
+        var value = $(this).val();
+        param[name] = value;
+    });
 
-    var hand = $(form).find("button[type='submit']").attr("data-hand");
+    return param;
+}
+
+var customSubmitHandler = function(form, id) {
+
+    $(form).find("button[type='submit']").attr("disabled", "disabled").text("正在提交...");
+    var param = findOfEditParam(id);
+    var url = jQuery("#"+id).attr("action");
+    jQuery.ajax({
+        url:path + url,
+        type:"POST",
+        data:param,
+        success:function(resp){
+            editCallback(resp);
+        },
+        error:function(){
+            $("form[data-option='edit']").find("button[type='submit']").removeAttr("disabled").text("提交");
+            editFormSettring.error();
+        }
+    });
+
+
+
+    /*var hand = $(form).find("button[type='submit']").attr("data-hand");
 
     if (hand == "1") {
 
@@ -35,7 +66,7 @@ var customSubmitHandler = function(form) {
 
     $(form).attr("target", "editIframe");
 
-    form.submit();
+    form.submit();*/
 };
 
 /**
@@ -59,8 +90,8 @@ var editFormSettring = {
 
         globalErrorHtml = globalErrorHtml + message + '，3秒后自动跳转上级页面</div></div>';
 
-        $("form[data-option='edit']").find(".panel").find(".panel-body").find(".form-group").eq(0).before(globalErrorHtml);
-
+        // $("form[data-option='edit']").find(".panel").find(".panel-body").find(".form-group").eq(0).before(globalErrorHtml);
+        $("form[data-option='edit']").find(".panel").find(".panel-footer").before(globalErrorHtml);
         var uri = window.location.pathname;
 
         var uriArray = uri.split("\/");
@@ -80,7 +111,7 @@ var editFormSettring = {
     defaultError: function(resp) {
     	var globalErrorHtml = '<div id="global" class="alert alert-danger" style="margin-bottom: 10px;">' + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' + '<div>';
     	
-        var formValid = resp.t;
+        var formValid = resp.data;
 
         if (formValid) {
 
@@ -261,14 +292,16 @@ var editFormSettring = {
 
         globalErrorHtml = globalErrorHtml + message + '</div></div>';
 
-        $("form[data-option='edit']").find(".panel").find(".panel-body").find(".form-group").eq(0).before(globalErrorHtml);
+        // $("form[data-option='edit']").find(".panel").find(".panel-body").find(".form-group").eq(0).before(globalErrorHtml);
+        $("form[data-option='edit']").find(".panel").find(".panel-footer").before(globalErrorHtml);
     },
     serverError: function(resp) {
-        var message = resp.message;
+        var globalErrorHtml = '<div id="global" class="alert alert-danger" style="margin-bottom: 10px;">' + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' + '<div>';
+        var message;
 
-        if (message) {
+        if (resp && resp.message) {
 
-            message = decodeURIComponent(message);
+            message = decodeURIComponent(resp.message);
         } else {
 
             message = "操作失败";
@@ -276,7 +309,8 @@ var editFormSettring = {
 
         globalErrorHtml = globalErrorHtml + message + '</div></div>';
 
-        $("form[data-option='edit']").find(".panel").find(".panel-body").find(".form-group").eq(0).before(globalErrorHtml);
+        // $("form[data-option='edit']").find(".panel").find(".panel-body").find(".form-group").eq(0).before(globalErrorHtml);
+        $("form[data-option='edit']").find(".panel").find(".panel-footer").before(globalErrorHtml);
     },
     success: function(resp) {},
     error: function(resp) {},
@@ -308,7 +342,7 @@ var editCallback = function(resp) {
             editFormSettring.success(resp);
 
         }
-    } else if ("500" == code) {
+    } else if ("400" == code) {
         if (editFormSettring.module == "1") {
 
             editFormSettring.defaultError(resp);

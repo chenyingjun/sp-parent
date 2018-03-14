@@ -3,7 +3,7 @@ CREATE TABLE `system_user` (
   `name` varchar(45) COLLATE utf8mb4_bin NOT NULL COMMENT '用户姓名',
   `account` varchar(45) COLLATE utf8mb4_bin NOT NULL COMMENT '登录名',
   `nick_name` varchar(45) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '用户昵称',
-  `pass_word` varchar(45) COLLATE utf8mb4_bin NOT NULL COMMENT '登录密码',
+  `pass_word` varchar(100) COLLATE utf8mb4_bin NOT NULL COMMENT '登录密码',
   `email` varchar(45) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮箱',
   `phone` varchar(11) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '手机号',
   `sex` varchar(10) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '性别,1.男;2.女',

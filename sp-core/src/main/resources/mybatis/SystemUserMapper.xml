@@ -42,17 +42,17 @@
   </sql>
 
   <select id="login" resultMap="BaseResultMap">
-    select
+    SELECT
     <include refid="Base_Column_List" />
-    from SYSTEM_USER
-    where account = #{account,jdbcType=VARCHAR} and  pass_word = #{passWord,jdbcType=VARCHAR}
+    FROM SYSTEM_USER
+    WHERE account = #{account,jdbcType=VARCHAR} and  pass_word = #{passWord,jdbcType=VARCHAR}
   </select>
 
   <select id="info" resultMap="infoResultMap" parameterType="java.lang.String">
-    select
+    SELECT
     <include refid="Base_Column_List" />
-    from SYSTEM_USER
-    where id = #{id,jdbcType=VARCHAR}
+    FROM SYSTEM_USER
+    WHERE id = #{id,jdbcType=VARCHAR}
   </select>
 
   <select id="page" resultMap="pageResultMap" parameterType="com.chenyingjun.sp.core.dto.SystemUserPageFind">
@@ -83,6 +83,41 @@
         AND su.create_time &lt;= #{endTime, jdbcType=TIMESTAMP}
       </if>
     </where>
-
   </select>
+
+  <update id="edit" parameterType="com.chenyingjun.sp.core.dto.SystemUserEdit">
+    UPDATE SYSTEM_USER
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null">
+        pass_word = #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="failNum != null">
+        fail_num = #{failNum,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null">
+        status = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+  </update>
 </mapper>

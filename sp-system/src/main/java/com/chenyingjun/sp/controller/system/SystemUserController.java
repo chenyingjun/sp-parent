@@ -1,11 +1,15 @@
 package com.chenyingjun.sp.controller.system;
 
 
+import com.chenyingjun.sp.common.bean.JsonResponse;
+import com.chenyingjun.sp.core.dto.SystemUserEdit;
 import com.chenyingjun.sp.core.dto.SystemUserPageFind;
 import com.chenyingjun.sp.core.entity.SystemUser;
+import com.chenyingjun.sp.core.service.SystemUserRoleService;
 import com.chenyingjun.sp.core.service.SystemUserService;
 import com.chenyingjun.sp.core.vo.SystemUserVo;
 import com.github.pagehelper.PageInfo;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,6 +26,9 @@ public class SystemUserController {
 
     @Autowired
     private SystemUserService systemUserService;
+
+    @Autowired
+    private SystemUserRoleService systemUserRoleService;
     /**
      *
      * @Title: goPage
@@ -60,8 +67,14 @@ public class SystemUserController {
     public String info(@PathVariable String id, ModelMap map) {
         SystemUserVo user = systemUserService.info(id);
         map.put("user", user);
-        map.put("roleId", "11");
+        String roleIds = systemUserRoleService.roleIdsByUserId(id);
+        map.put("roleIds", roleIds);
         return "system/systemUserEdit";
     }
 
+    @RequestMapping("edit")
+    @ResponseBody
+    public Object edit(@Valid SystemUserEdit edit) {
+        return systemUserService.edit(edit);
+    }
 }

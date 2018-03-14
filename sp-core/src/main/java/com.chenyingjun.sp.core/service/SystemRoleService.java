@@ -2,11 +2,15 @@ package com.chenyingjun.sp.core.service;
 
 import com.chenyingjun.sp.core.dto.SystemRolePageFind;
 import com.chenyingjun.sp.core.entity.SystemRole;
+import com.chenyingjun.sp.core.entity.SystemRoleExample;
 import com.chenyingjun.sp.core.mapper.SystemRoleMapper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,5 +52,15 @@ public class SystemRoleService extends BaseService<SystemRole>{
     public SystemRole info(String id) {
         SystemRole role = systemRoleMapper.selectByPrimaryKey(id);
         return role;
+    }
+
+    public List<SystemRole> list(String ids) {
+        if (StringUtils.isBlank(ids)) {
+            return null;
+        }
+        List<String> idList = Lists.newArrayList(ids.split(","));
+        SystemRoleExample example = new SystemRoleExample();
+        example.createCriteria().andIdIn(idList).andStatusEqualTo(1);
+        return systemRoleMapper.selectByExample(example);
     }
 }

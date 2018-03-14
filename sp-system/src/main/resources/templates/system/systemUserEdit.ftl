@@ -53,7 +53,7 @@
 					<div class="panel-body panel-body-nopadding">
 						<!-- 积分产品基本信息 -->
 						<form id="baseInfoForm" name="baseInfoForm"
-							action="${request.contextPath}/systemuser/edit" class="form-horizontal"
+							action="/systemuser/edit" class="form-horizontal"
 							method="post" accept-charset="UTF-8"
 							enctype="application/x-www-form-urlencoded" data-option="edit">
 							<div class="panel panel-default">
@@ -89,9 +89,9 @@
 											<select id="sex" class="select2 mg-bm10"
 												data-placeholder="请选择性别" name="sex">
 												<option value=""></option>
-												<option value="male"
+												<option value="1"
 													<#if user?? && (user.sex)! == '1'> selected="selected" </#if>>男</option>
-												<option value="female"
+												<option value="2"
 													<#if user?? && (user.sex)! == '2'> selected="selected" </#if>>女</option>
 											</select> <label class="error" for="sex"></label>
 										</div>
@@ -121,6 +121,7 @@
 										<div class="col-sm-4">
 											<input type="text" id="phone" name="phone"
 												value="${(user.phone)! }" class="form-control" required="required"
+											   onkeyup="this.value=this.value.replace(/[^\d]/g,'');"
 												maxlength="32" placeholder="请输入手机号" /><label class="error"
 												for="phone"></label>
 										</div>
@@ -153,23 +154,23 @@
 										<label class="col-sm-2 control-label">所属角色<span
 												class="asterisk">*</span></label>
 										<div class="col-sm-4">
-											<input type="text" id="roleId" name="roleId" value="${roleId! }"
+											<input type="text" id="roleIds" name="roleIds" value="${roleIds! }"
 												class="js-data-example-ajax mg-bm10" maxlength="32" required
-												placeholder="请选择所属角色" /><label class="error" for="roleId"></label>
+												placeholder="请选择所属角色" /><label class="error" for="roleIds"></label>
 										</div>
 									</div>
 									<#if user??>
 									<div class="form-group">
 										<label class="col-sm-2 control-label">本次登录时间 </label>
 										<div class="col-sm-4">
-											<input type="text" id="loginTime" name="loginTime"
+											<input type="text"
 												class="form-control"
 												value="${(user.loginTime?string('yyyy-MM-dd HH:mm:ss'))!}"
 												disabled="disabled" />
 										</div>
 										<label class="col-sm-2 control-label">本次登录IP</label>
 										<div class="col-sm-4">
-											<input type="text" id="loginIp" name="loginIp"
+											<input type="text"
 												value="${(user.loginIp)! }" class="form-control"
 												disabled="disabled" /> <label class="error"
 												for="loginIp"></label>
@@ -180,14 +181,14 @@
 									<div class="form-group">
 										<label class="col-sm-2 control-label">上次登录时间 </label>
 										<div class="col-sm-4">
-											<input type="text" id="lastTime" name="lastTime"
+											<input type="text"
 												class="form-control"
 												value="${(user.lastTime?string('yyyy-MM-dd HH:mm:ss'))!}"
 												disabled="disabled" />
 										</div>
 										<label class="col-sm-2 control-label">上次登录IP</label>
 										<div class="col-sm-4">
-											<input type="text" id="lastIp" name="lastIp"
+											<input type="text"
 												value="${(user.lastIp)! }" class="form-control"
 												disabled="disabled" /> <label class="error"
 												for="lastIp"></label>
@@ -198,14 +199,14 @@
 									<div class="form-group">
 										<label class="col-sm-2 control-label">创建时间 </label>
 										<div class="col-sm-4">
-											<input type="text" id="createTime" name="createTime"
+											<input type="text"
 												class="form-control"
 												value="${(user.createTime?string('yyyy-MM-dd HH:mm:ss'))!}"
 												disabled="disabled" />
 										</div>
 										<label class="col-sm-2 control-label">修改时间 </label>
 										<div class="col-sm-4">
-											<input type="text" id="updateTime" name="updateTime"
+											<input type="text"
 												class="form-control"
 												value="${(user.updateTime?string('yyyy-MM-dd HH:mm:ss'))!}"
 												disabled="disabled" />
@@ -248,7 +249,7 @@
 				},
 				submitHandler : function(form) {
 
-					customSubmitHandler(form);
+					customSubmitHandler(form, "baseInfoForm");
 				},
 				unhighlight : function(element) {
 					jQuery(element).parent().removeClass('has-error');
@@ -264,23 +265,23 @@
 			});
 			
 			//加载角色信息
-			jQuery("#roleId").select2({
+			jQuery("#roleIds").select2({
 				width : '100%',
 				language : 'zh-CN',
 				placeholder : "输入角色名解锁",
-                maximumSelectionSize : 1,
+                maximumSelectionSize : 10,
 				allowClear : true,
 				dropdownCssClass : "bigdrop",
 				multiple : true,
 				tags: true,
 				initSelection : function(element, callback) { // 初始化时设置默认值
-					var id = $(element).val();
+					var ids = $(element).val();
 
-					if (id.length > 0) {
+					if (ids.length > 0) {
 
 						$.ajax({
 							type : 'GET',
-							url : path + "/systemrole/data/" + id,
+							url : path + "/systemrole/data/ids?ids=" + ids,
 							dataType : "json",
 							data : null,
 							cache : false,

@@ -11,6 +11,11 @@
 
     <artifactId>sp-common</artifactId>
 
+    <properties>
+        <guava.version>23.0</guava.version>
+
+    </properties>
+
     <dependencies>
         <!-- 参数验证 -->
         <dependency>
@@ -18,5 +23,13 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
         <!-- 参数验证结束 -->
+
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
     </dependencies>
 </project>

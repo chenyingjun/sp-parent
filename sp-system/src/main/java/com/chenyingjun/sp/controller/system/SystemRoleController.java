@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/systemrole")
@@ -64,12 +65,12 @@ public class SystemRoleController {
 
     /**
      * 根据主键查询用户信息
-     * @param id 用户主键
+     * @param ids 用户主键
      * @return 用户信息
      */
-    @RequestMapping("data/{id}")
+    @RequestMapping("data/ids")
     @ResponseBody
-    public SystemRole dataId(@PathVariable String id) {
-        return systemRoleService.info(id);
+    public List<SystemRole> dataId(String ids) {
+        return systemRoleService.list(ids);
     }
 }

@@ -38,5 +38,6 @@
 	<mappers>
 		<mapper resource="mybatis/SystemUserMapper.xml" />
 		<mapper resource="mybatis/SystemRoleMapper.xml" />
+		<mapper resource="mybatis/SystemUserRoleMapper.xml" />
 	</mappers>
 </configuration>

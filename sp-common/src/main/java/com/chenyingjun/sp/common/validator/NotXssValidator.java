@@ -39,14 +39,14 @@ public class NotXssValidator implements ConstraintValidator<NotXss, String> {
 
         if (minLength > 0) {
             if (value.length() < minLength) {
-                context.buildConstraintViolationWithTemplate("${data.minLength}");
+                context.buildConstraintViolationWithTemplate("{data.minLength}").addConstraintViolation();
                 return false;
             }
         }
 
         if (maxLength > 0) {
             if (value.length() > maxLength) {
-                context.buildConstraintViolationWithTemplate("${data.maxLength}");
+                context.buildConstraintViolationWithTemplate("{data.maxLength}").addConstraintViolation();
                 return false;
             }
         }

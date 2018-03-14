@@ -1,14 +1,17 @@
 package com.chenyingjun.sp.core.service;
 
+import com.chenyingjun.sp.core.dto.SystemUserEdit;
 import com.chenyingjun.sp.core.dto.SystemUserPageFind;
 import com.chenyingjun.sp.core.entity.SystemUser;
 import com.chenyingjun.sp.core.mapper.SystemUserMapper;
 import com.chenyingjun.sp.core.vo.SystemUserPageVo;
 import com.chenyingjun.sp.core.vo.SystemUserVo;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +37,9 @@ public class SystemUserService extends BaseService<SystemUser>{
         map.put("account", account);
         map.put("passWord", passWord);
         SystemUser user = systemUserMapper.login(map);
-        user.setPassWord(null);
+        if (user != null) {
+            user.setPassWord(null);
+        }
         return user;
     }
 
@@ -61,5 +66,16 @@ public class SystemUserService extends BaseService<SystemUser>{
         SystemUserVo user = systemUserMapper.info(id);
         user.setPassWord(null);
         return user;
+    }
+
+    public int edit(SystemUserEdit edit) {
+        edit.setUpdateTime(new Date());
+        String passWord = edit.getPassWord();
+        if (StringUtils.isBlank(passWord)) {
+            edit.setPassWord(null);
+        } else {
+
+        }
+        return systemUserMapper.edit(edit);
     }
 }
