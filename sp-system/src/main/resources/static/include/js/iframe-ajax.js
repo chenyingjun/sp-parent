@@ -76,7 +76,7 @@ var editFormSettring = {
     module: "1",
     defaultSuccess: function(resp) {
 
-        var globalErrorHtml = '<div id="global" class="alert alert-success" style="margin-bottom: 10px;">' + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' + '<div>';
+        var globalErrorHtml = '<div id="global" class="alert alert-success" style="margin-bottom: 10px;margin-left: 30px;margin-right: 30px;">' + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' + '<div>';
 
         var message = resp.message;
 
@@ -109,7 +109,7 @@ var editFormSettring = {
         }
     },
     defaultError: function(resp) {
-    	var globalErrorHtml = '<div id="global" class="alert alert-danger" style="margin-bottom: 10px;">' + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' + '<div>';
+    	var globalErrorHtml = '<div id="global" class="alert alert-danger" style="margin-bottom: 10px;margin-left: 30px;margin-right: 30px;">' + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' + '<div>';
     	
         var formValid = resp.data;
 
@@ -296,7 +296,7 @@ var editFormSettring = {
         $("form[data-option='edit']").find(".panel").find(".panel-footer").before(globalErrorHtml);
     },
     serverError: function(resp) {
-        var globalErrorHtml = '<div id="global" class="alert alert-danger" style="margin-bottom: 10px;">' + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' + '<div>';
+        var globalErrorHtml = '<div id="global" class="alert alert-danger" style="margin-bottom: 10px;margin-left: 30px;margin-right: 30px;">' + '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' + '<div>';
         var message;
 
         if (resp && resp.message) {

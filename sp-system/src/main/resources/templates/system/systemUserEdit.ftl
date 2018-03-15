@@ -61,18 +61,23 @@
 							<div class="panel panel-default">
 								<div class="panel-body">
 									<div class="form-group">
-										<label class="col-sm-2 control-label">用户主键</label>
+                                        <input type="hidden" id="userId" name="userId"
+                                               class="form-control" maxlength="20"
+                                               value="${(user.id)! }" />
+										<label class="col-sm-2 control-label">登录名<span
+                                                class="asterisk">*</span></label>
 										<div class="col-sm-4">
-											<input type="text" id="userId" name="userId"
-												class="form-control" readonly="readonly"
-												value="${(user.id)! }" />
+											<input type="code520" id="account" name="account"
+												class="form-control" required="required"
+												value="${(user.account)! }" placeholder="请输入登录名"/>
+												<label class="error" for="account"></label>
 										</div>
 										<label class="col-sm-2 control-label">用户名<span
 											class="asterisk">*</span></label>
 										<div class="col-sm-4">
 											<input type="text" id="name" name="name" required="required"
 												value="${(user.name)! }" class="form-control"
-												maxlength="32" placeholder="请输入用户名" /><label class="error"
+												maxlength="20" placeholder="请输入用户名" /><label class="error"
 												for="name"></label>
 										</div>
 									</div>
@@ -83,14 +88,14 @@
 										<div class="col-sm-4">
 											<input type="text" id="nickName" name="nickName"
 												value="${(user.nickName)! }" class="form-control" required="required"
-												maxlength="32" placeholder="请输入昵称" /><label class="error"
+												maxlength="20" placeholder="请输入昵称" /><label class="error"
 												for="nickName"></label>
 										</div>
 										<label class="col-sm-2 control-label">性别</label>
 										<div class="col-sm-4">
 											<select id="sex" class="select2 mg-bm10"
 												data-placeholder="请选择性别" name="sex">
-												<option value=""></option>
+												<option value="0">未知</option>
 												<option value="1"
 													<#if user?? && (user.sex)! == '1'> selected="selected" </#if>>男</option>
 												<option value="2"
@@ -105,14 +110,14 @@
 										<div class="col-sm-4">
 											<input type="password" id="passWord" name="passWord"
 												class="form-control"
-												maxlength="32" placeholder="请输入密码" /><label class="error"
+												maxlength="20" placeholder="请输入密码" /><label class="error"
 												for="passWord"></label>
 										</div>
 										<label class="col-sm-2 control-label">邮箱</label>
 										<div class="col-sm-4">
-											<input type="text" id="email" name="email"
+											<input type="email" id="email" name="email"
 												value="${(user.email)! }" class="form-control"
-												maxlength="32" placeholder="请输入邮箱" /><label class="error"
+												maxlength="45" placeholder="请输入邮箱" /><label class="error"
 												for="email"></label>
 										</div>
 									</div>
@@ -121,11 +126,14 @@
 										<label class="col-sm-2 control-label">手机号<span
 											class="asterisk">*</span></label>
 										<div class="col-sm-4">
-											<input type="text" id="phone" name="phone"
+											<#--<input type="mobile" id="phone" name="phone"
 												value="${(user.phone)! }" class="form-control" required="required"
-											   onkeyup="this.value=this.value.replace(/[^\d]/g,'');"
-												maxlength="32" placeholder="请输入手机号" /><label class="error"
-												for="phone"></label>
+												maxlength="11" placeholder="请输入手机号" /><label class="error"
+												for="phone"></label>-->
+                                            <input type="mobile" id="phone" name="phone"
+                                                   value="${(user.phone)! }" class="form-control" focusCleanup="true"
+                                                   maxlength="45" placeholder="请输入手机号" /><label class="error"
+                                                                                               for="phone"></label>
 										</div>
 										<label class="col-sm-2 control-label">连续登录失败次数<span
 											class="asterisk">*</span></label>
@@ -247,7 +255,7 @@
 		$(function($) {
 
 			jQuery("#baseInfoForm").validate({
-				rules : {
+                rules : {
 				},
 				submitHandler : function(form) {
 					var pwd = jQuery("#passWord").val();

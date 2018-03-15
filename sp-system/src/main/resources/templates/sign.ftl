@@ -92,21 +92,11 @@
             var username = $('.uname').val();
             var password = $('.pword').val();
             if(username == '') {
-                $('.error').fadeOut('fast', function(){
-                    $('.error').css('top', '27px').show();
-                });
-                $('.error').fadeIn('fast', function(){
-                    $('.uname').focus();
-                });
+                $('#errorInfo').html("请输入用户名");
                 return false;
             }
             if(password == '') {
-                $('.error').fadeOut('fast', function(){
-                    $('.error').css('top', '96px').show();
-                });
-                $(this).find('.error').fadeIn('fast', function(){
-                    $('.pword').focus();
-                });
+                $('#errorInfo').html("请输入密码");
                 return false;
             }
             var pswd = password;

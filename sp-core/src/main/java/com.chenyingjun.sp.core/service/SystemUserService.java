@@ -94,22 +94,50 @@ public class SystemUserService extends BaseService<SystemUser>{
     }
 
     public int edit(SystemUserEdit edit) {
-        edit.setUpdateTime(new Date());
+        String userId = edit.getUserId();
+        if (StringUtils.isBlank(userId)) {
+            return insert(edit);
+        } else {
+            return update(edit);
+        }
+    }
+
+    public int insert(SystemUserEdit edit) {
+        SystemUser user = edit.thisToSystemUser();
+        user.setCreateTime(new Date());
         String passWord = edit.getPassWord();
         if (StringUtils.isBlank(passWord)) {
-            edit.setPassWord(null);
-        } else {
+            throw new BusinessException(ExceptionType.PASSWORD_NULL);
+        }
+        String md5Pwd = md5Pwd(passWord);
+        user.setPassWord(md5Pwd);
+        int i = systemUserMapper.insertSelective(user);
+        String userId = user.getId();
+        List<String> roleIds = edit.getRoleIds();
+        systemUserRoleService.insert(userId, roleIds);
+        return i;
+    }
+
+    public int update(SystemUserEdit edit) {
+        edit.setUpdateTime(new Date());
+        String passWord = md5Pwd(edit.getPassWord());
+        edit.setPassWord(passWord);
+        String userId = edit.getUserId();
+        List<String> roleIds = edit.getRoleIds();
+        systemUserRoleService.insert(userId, roleIds);
+        return systemUserMapper.edit(edit);
+    }
+
+    private String md5Pwd(String passWord) {
+        String md5Pwd = null;
+        if (StringUtils.isNotBlank(passWord)) {
             try {
-                passWord = com.chenyingjun.sp.common.utils.StringUtils.md532(CommonConsts.MD5_PWD + passWord);
-                edit.setPassWord(passWord);
+                md5Pwd = com.chenyingjun.sp.common.utils.StringUtils.md532(CommonConsts.MD5_PWD + passWord);
             } catch (Exception e) {
                 LoggerUtils.error(getClass(), "密码加密失败");
                 throw new BusinessException(ExceptionType.MD5_PASSWORD_ERROR);
             }
         }
-        String userId = edit.getUserId();
-        List<String> roleIds = edit.getRoleIds();
-        systemUserRoleService.insert(userId, roleIds);
-        return systemUserMapper.edit(edit);
+        return md5Pwd;
     }
 }

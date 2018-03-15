@@ -8,5 +8,5 @@
 out
 gen
 .gitignore
-sp-system/src/main/resources/jdbc.properties
-sp-core/src/main/resources/generator.properties
+/sp-system/src/main/resources/jdbc.properties
+/sp-core/src/main/resources/generator.properties

@@ -53,26 +53,26 @@ jQuery.validator.addMethod("mobile", function(value, element) {
 
 //只能输入数字，最多11位
 jQuery.validator.addMethod("number11", function(value, element) {
-	var mobile = /^\d{1,11}$/;
-	return this.optional(element) || (mobile.test(value));
+	var number11 = /^\d{1,11}$/;
+	return this.optional(element) || (number11.test(value));
 }, "只能输入数字，最多11位");
 
 // 身份证号码验证
 jQuery.validator.addMethod("idCard", function(value, element) {
-	var tel = /^([0-9\*]{14}|[0-9\*]{17})[0-9xX]$/;
-	return this.optional(element) || (tel.test(value));
+	var idCard = /^([0-9\*]{14}|[0-9\*]{17})[0-9xX]$/;
+	return this.optional(element) || (idCard.test(value));
 }, "身份证号码格式不正确");
 
 //银行卡号验证
 jQuery.validator.addMethod("bankCard", function(value, element) {
-	var tel = /^(\d{16}|\d{19})$/;
-	return this.optional(element) || (tel.test(value));
+	var bankCard = /^(\d{16}|\d{19})$/;
+	return this.optional(element) || (bankCard.test(value));
 }, "银行卡号格式不正确");
 
 //用户名验证，必须且只能包含数字和字母.6-20
-jQuery.validator.addMethod("userName", function(value, element) {
-	var tel = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
-	return this.optional(element) || (tel.test(value));
+jQuery.validator.addMethod("account", function(value, element) {
+	var account = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+	return this.optional(element) || (account.test(value));
 }, "必须且只能包含数字和字母6-20");
 
 // 只能包括英文字母或者数字或者下划线(下划线不能开头跟结尾)
@@ -86,6 +86,13 @@ jQuery.validator.addMethod("code1632", function(value, element) {
 	var objectCode = /^[0-9A-Za-z]{16,32}$/;
 	return this.optional(element) || (objectCode.test(value));
 }, "只能包括16-32位的数字或字母");
+
+//只能包括6-20位的数字或字母
+jQuery.validator.addMethod("code520", function(value, element) {
+    var objectCode = /^[0-9A-Za-z]{5,20}$/;
+    return this.optional(element) || (objectCode.test(value));
+}, "只能包括5-20位的数字或字母");
+
 
 //长度6-20位,字母、数字组合
 jQuery.validator.addMethod("password", function(value, element) {

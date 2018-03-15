@@ -92,6 +92,7 @@
         </foreach>
       </if>
     </where>
+    GROUP BY su.id
   </select>
 
   <update id="edit" parameterType="com.chenyingjun.sp.core.dto.SystemUserEdit">

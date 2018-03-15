@@ -16,6 +16,7 @@ public enum ExceptionType {
     USERNAME_PASSWORD_ERROR(601, "用户名或密码错误"),
     USER_NOT_FOUND(602, "用户不存在"),
     MD5_PASSWORD_ERROR(603, "密码加密失败"),
+    PASSWORD_NULL(604, "密码不能为空"),
     ;
 
     private int code;
