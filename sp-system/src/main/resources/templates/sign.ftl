@@ -10,7 +10,9 @@
     <title>后台业务系统-系统登录</title>
     <link rel="shortcut icon" href="${request.contextPath}/include/images/favicon.png"
           type="image/png">
-    <#include "common/resources.ftl"/>
+    <script type="text/javascript"
+            src="${request.contextPath}/include/js/md5.js"></script>
+<#include "common/resources.ftl"/>
 </head>
 <body class="signin">
 <section>
@@ -108,7 +110,8 @@
                 return false;
             }
             var pswd = password;
-            var data = {passWord:password,account:username,rememberMe:$("#rememberMe").is(':checked')};
+            pswd = hex_md5(pswd);
+            var data = {passWord:pswd,account:username,rememberMe:$("#rememberMe").is(':checked')};
 
             $.ajax({
                 url:path + "/submitLogin",
@@ -116,12 +119,15 @@
                 type:"post",
                 dataType:"json",
                 beforeSend:function(){
-                    console.log("开始登录，请注意后台控制台。");
                 },
                 success:function(result){
                     if(result && result.code != 200){
-                        console.log(result.message,function(){});
                         $('.password').val('');
+                        if (result && result.message) {
+                            $('#errorInfo').html(result.message);
+                        } else {
+                            $('#errorInfo').html("系统内部错误");
+                        }
                         return;
                     }else{
                         var data = result.data;

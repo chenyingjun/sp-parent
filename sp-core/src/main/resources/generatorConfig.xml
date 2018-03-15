@@ -39,7 +39,7 @@
             <property name="rootInterface" value="com.chenyingjun.sp.core.utils.MyMapper"/>
         </javaClientGenerator>
         <!--生成对应表及类名-->
-        <table tableName="system_user" domainObjectName="SystemUser" enableCountByExample="false" enableUpdateByExample="true"
+        <table tableName="system_user_role" domainObjectName="SystemUserRole" enableCountByExample="false" enableUpdateByExample="true"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" />
     </context>
 </generatorConfiguration>

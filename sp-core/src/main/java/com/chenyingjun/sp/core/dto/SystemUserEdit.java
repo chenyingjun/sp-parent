@@ -28,7 +28,6 @@ public class SystemUserEdit implements Serializable {
     @Pattern(regexp = "[1,2]{1}", message = "{data.input}")
     private String sex;
 
-    @NotXss(maxLength = 20)
     private String passWord;
 
     @NotXss(maxLength = 45)

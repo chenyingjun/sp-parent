@@ -17,6 +17,12 @@ public class CommonConsts {
     /***项目根路径*/
     public static final String CONTEXT_PATH = "contextPath";
 
+    /***MD5复杂加密项*/
+    public static final String MD5_PWD = "CYJ";
+
+    /**
+     * 失败次数锁定
+     */
     public static final int LOGIN_FAIL_NUM = 5;
 }
 

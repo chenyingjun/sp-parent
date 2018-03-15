@@ -1,6 +1,7 @@
 package com.chenyingjun.sp.controller.system;
 
 import com.chenyingjun.sp.common.constant.CommonConsts;
+import com.chenyingjun.sp.common.exception.BusinessException;
 import com.chenyingjun.sp.common.utils.IPUtil;
 import com.chenyingjun.sp.common.utils.LoggerUtils;
 import com.chenyingjun.sp.core.entity.SystemUser;
@@ -99,14 +100,12 @@ public class CommonController {
         } catch (DisabledAccountException e) {
             resultMap.put("status", 500);
             resultMap.put("message", "帐号已经禁用。");
+        } catch (BusinessException e) {
+            resultMap.put("status", e.getCode());
+            resultMap.put("message", e.getMessage());
         } catch (Exception e) {
             resultMap.put("status", 500);
             resultMap.put("message", "帐号或密码错误");
-            int failNum = user.getFailNum() + 1;
-            user.setFailNum(failNum);
-            if (failNum >= CommonConsts.LOGIN_FAIL_NUM) {
-                user.setStatus(SystemUser.STATUS_0);
-            }
         }
         try {
             if (null != user) {

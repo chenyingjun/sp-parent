@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
+import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -979,5 +980,38 @@ public class StringUtils {
         }
 
         return true;
+    }
+
+    /**
+     *
+     * @Title: md532
+     * @Description: 32位md5加密
+     * @param text
+     *            需要加密的字符串
+     * @return 加密后的字符串小写
+     */
+    public static String md532(String text) throws Exception {
+
+        StringBuffer hexString = new StringBuffer();
+
+        MessageDigest md = MessageDigest.getInstance("MD5");
+
+        md.update(text.getBytes());
+
+        byte[] digest = md.digest();
+
+        for (int i = 0; i < digest.length; i++) {
+
+            text = Integer.toHexString(0xFF & digest[i]);
+
+            if (text.length() < 2) {
+
+                text = "0" + text;
+            }
+
+            hexString.append(text);
+        }
+
+        return hexString.toString().toLowerCase();
     }
 }

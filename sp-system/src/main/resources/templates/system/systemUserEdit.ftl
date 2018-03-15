@@ -7,6 +7,8 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="author" content="chenyingjun">
 <title>编辑系统用户信息</title>
+    <script type="text/javascript"
+            src="${request.contextPath}/include/js/md5.js"></script>
 <#include "../common/resources.ftl"/>
 </head>
 <body>
@@ -101,7 +103,7 @@
 									<div class="form-group">
 										<label class="col-sm-2 control-label">密码</label>
 										<div class="col-sm-4">
-											<input type="text" id="passWord" name="passWord"
+											<input type="password" id="passWord" name="passWord"
 												class="form-control"
 												maxlength="32" placeholder="请输入密码" /><label class="error"
 												for="passWord"></label>
@@ -248,7 +250,11 @@
 				rules : {
 				},
 				submitHandler : function(form) {
-
+					var pwd = jQuery("#passWord").val();
+					if (pwd) {
+						pwd = hex_md5(pwd);
+                        jQuery("#passWord").val(pwd);
+					}
 					customSubmitHandler(form, "baseInfoForm");
 				},
 				unhighlight : function(element) {
