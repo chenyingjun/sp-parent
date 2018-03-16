@@ -28,6 +28,10 @@ var customSubmitHandler = function(form, id) {
         type:"POST",
         data:param,
         success:function(resp){
+            if (resp && resp.code == '300') {
+                alert('请重新登录！');
+                window.location.reload();
+            }
             editCallback(resp);
         },
         error:function(){

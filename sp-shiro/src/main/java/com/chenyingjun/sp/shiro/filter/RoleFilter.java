@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class RoleFilter extends AccessControlFilter {
 
-	static final String LOGIN_URL = "/login";
+	static final String LOGIN_URL = "/login_on_user";
 	static final String UNAUTHORIZED_URL = "/401";
 	
 	@Override

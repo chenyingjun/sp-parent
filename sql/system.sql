@@ -21,16 +21,26 @@ CREATE TABLE `system_user` (
   UNIQUE KEY `account_UNIQUE` (`account`),
   KEY `system_user_status_index` (`status`),
   KEY `system_user_delFlag_index` (`del_flag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='系统用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='系统用户表'
 
 
-CREATE TABLE `sp`.`system_role` (
-  `id` VARCHAR(40) NOT NULL COMMENT '角色主键',
-  `code` VARCHAR(45) NOT NULL COMMENT '角色编号',
-  `name` VARCHAR(45) NOT NULL COMMENT '角色名',
-  `del_flag` int(1) NOT NULL DEFAULT '1' COMMENT '是否删除   0.已删除；1.可用',
-  `status` INT(2) NOT NULL DEFAULT 1 COMMENT '状态  1.可用;0.禁用',
-  `create_time` DATETIME NULL,
-  `update_time` DATETIME NULL,
-  PRIMARY KEY (`id`))
-COMMENT = '系统角色';
+CREATE TABLE `system_role` (
+  `id` varchar(40) COLLATE utf8mb4_bin NOT NULL COMMENT '角色主键',
+  `code` varchar(45) COLLATE utf8mb4_bin NOT NULL COMMENT '角色编号',
+  `name` varchar(45) COLLATE utf8mb4_bin NOT NULL COMMENT '角色名',
+  `status` int(2) NOT NULL DEFAULT '1' COMMENT '状态  1.可用;0.禁用',
+  `del_flag` int(2) NOT NULL DEFAULT '1' COMMENT '是否删除   0.已删除；1.可用',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='系统角色'
+
+
+CREATE TABLE `system_user_role` (
+  `user_id` varchar(40) COLLATE utf8mb4_bin NOT NULL,
+  `role_id` varchar(40) COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `fk_sur_role_id_idx` (`role_id`),
+  CONSTRAINT `fk_sur_role_id` FOREIGN KEY (`role_id`) REFERENCES `system_role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_sur_user_id` FOREIGN KEY (`user_id`) REFERENCES `system_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='系统用户角色'

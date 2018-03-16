@@ -7,8 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 用户角色 服务
@@ -41,6 +42,17 @@ public class SystemUserRoleService extends BaseService<SystemRole>{
         } else {
             return roleIds.toString();
         }
+    }
+
+    public Set<String> roleIds(String userId) {
+        List<SystemUserRoleKey> keyList = listByUserId(userId);
+        Set<String> roleIds = new HashSet<String>();
+        if (keyList != null && keyList.size() >= 1) {
+            for (SystemUserRoleKey key: keyList) {
+                roleIds.add(key.getRoleId());
+            }
+        }
+        return roleIds;
     }
 
     public List<SystemUserRoleKey> listByUserId(String userId) {

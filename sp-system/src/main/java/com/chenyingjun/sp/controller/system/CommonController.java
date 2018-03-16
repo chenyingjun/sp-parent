@@ -1,6 +1,5 @@
 package com.chenyingjun.sp.controller.system;
 
-import com.chenyingjun.sp.common.constant.CommonConsts;
 import com.chenyingjun.sp.common.exception.BusinessException;
 import com.chenyingjun.sp.common.utils.IPUtil;
 import com.chenyingjun.sp.common.utils.LoggerUtils;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;

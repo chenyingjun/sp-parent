@@ -163,7 +163,10 @@
 				/error/** = anon
 				/login = anon
 				/submitLogin = anon
-				/** = authc
+				/main = authc
+				/logout = login,permission
+				/systemuser/** = login,permission
+				/systemrole/** = login,permission
 			</value>
 		</property>
        <property name="filters">

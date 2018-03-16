@@ -1,10 +1,9 @@
 package com.chenyingjun.sp.shiro.token;
 
-import com.chenyingjun.sp.core.entity.BaseEntity;
 import com.chenyingjun.sp.core.entity.SystemUser;
+import com.chenyingjun.sp.core.service.SystemUserRoleService;
 import com.chenyingjun.sp.core.service.SystemUserService;
 import com.chenyingjun.sp.shiro.token.manager.TokenManager;
-import freemarker.template.TemplateModelException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -14,7 +13,10 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -34,6 +36,9 @@ public class SampleRealm extends AuthorizingRealm {
 	OrgService roleService;*/
 	@Autowired
 	SystemUserService systemUserService;
+
+	@Autowired
+	SystemUserRoleService systemUserRoleService;
 
 	/** x */
 	@Autowired
@@ -71,10 +76,10 @@ public class SampleRealm extends AuthorizingRealm {
     	String userId = TokenManager.getUserId();
 		SimpleAuthorizationInfo info =  new SimpleAuthorizationInfo();
 		//根据用户ID查询角色（role），放入到Authorization里。
-//		Set<String> roles = roleService.findRoleByUserId(userId);
-		List<String> roleList = new ArrayList<String>();
-		roleList.add("chenRole");
-		Set<String> roles = new HashSet<String>(roleList);
+		Set<String> roleIds = systemUserRoleService.roleIds(userId);
+		/*List<String> roleList = new ArrayList<String>();
+		roleList.add("chenRole");*/
+		Set<String> roles = new HashSet<String>(roleIds);
 		info.setRoles(roles);
 		//根据用户ID查询权限（permission），放入到Authorization里。
 		List<String> permissionList = new ArrayList<String>();
