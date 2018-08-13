@@ -5,6 +5,11 @@ import com.dangdang.config.service.zookeeper.ZookeeperConfigGroup;
 import com.dangdang.config.service.zookeeper.ZookeeperConfigProfile;
 import org.springframework.stereotype.Component;
 
+/**
+ * 获取配置信息
+ * @author chenyingjun
+ * @deprecated 改用GlobalUtils
+ */
 @Component
 public class ConfigToolkit {
 

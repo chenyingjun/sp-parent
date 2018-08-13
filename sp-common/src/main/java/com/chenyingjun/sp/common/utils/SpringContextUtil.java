@@ -4,6 +4,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * 静态获取Bean
@@ -12,20 +13,35 @@ import org.springframework.context.ApplicationContextAware;
  * @version 2018年02月08日
  * @since 1.0
  */
+@Configuration
 public class SpringContextUtil implements ApplicationContextAware {
 	private static ApplicationContext applicationContext;
 
-	// 实现
+	/**
+	 * 重构上下文信息
+	 * @param applicationContext 上下文
+	 * @throws BeansException e
+	 */
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext)
 			throws BeansException {
 		SpringContextUtil.applicationContext = applicationContext;
 	}
 
+	/**
+	 * 获取上下文
+	 * @return 上下文
+	 */
 	public static ApplicationContext getApplicationContext() {
 		return applicationContext;
 	}
 
+	/**
+	 * 获取指定的bean
+	 * @param name bean名
+	 * @return bean对象
+	 * @throws BeansException e
+	 */
 	public static Object getBean(String name) throws BeansException {
 		try {
 			return applicationContext.getBean(name);

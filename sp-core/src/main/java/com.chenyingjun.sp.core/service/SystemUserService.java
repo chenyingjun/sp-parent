@@ -3,7 +3,9 @@ package com.chenyingjun.sp.core.service;
 import com.chenyingjun.sp.common.bean.ExceptionType;
 import com.chenyingjun.sp.common.constant.CommonConsts;
 import com.chenyingjun.sp.common.exception.BusinessException;
+import com.chenyingjun.sp.common.utils.GlobalUtils;
 import com.chenyingjun.sp.common.utils.LoggerUtils;
+import com.chenyingjun.sp.common.utils.SpringContextUtil;
 import com.chenyingjun.sp.core.dto.SystemUserEdit;
 import com.chenyingjun.sp.core.dto.SystemUserPageFind;
 import com.chenyingjun.sp.core.entity.SystemUser;
@@ -13,6 +15,7 @@ import com.chenyingjun.sp.core.vo.SystemUserVo;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.MutablePropertySources;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -93,6 +96,11 @@ public class SystemUserService extends BaseService<SystemUser>{
         return user;
     }
 
+    /**
+     * 编辑
+     * @param edit 用户信息
+     * @return 编辑条数
+     */
     public int edit(SystemUserEdit edit) {
         String userId = edit.getUserId();
         if (StringUtils.isBlank(userId)) {
@@ -102,6 +110,11 @@ public class SystemUserService extends BaseService<SystemUser>{
         }
     }
 
+    /**
+     * 新增
+     * @param edit 用户信息
+     * @return 新增条数
+     */
     public int insert(SystemUserEdit edit) {
         SystemUser user = edit.thisToSystemUser();
         user.setCreateTime(new Date());
@@ -118,6 +131,11 @@ public class SystemUserService extends BaseService<SystemUser>{
         return i;
     }
 
+    /**
+     * 更新
+     * @param edit 用户信息
+     * @return 更新条数
+     */
     public int update(SystemUserEdit edit) {
         edit.setUpdateTime(new Date());
         String passWord = md5Pwd(edit.getPassWord());
@@ -128,6 +146,11 @@ public class SystemUserService extends BaseService<SystemUser>{
         return systemUserMapper.edit(edit);
     }
 
+    /**
+     * md5加密
+     * @param passWord 密码
+     * @return 加密结果
+     */
     private String md5Pwd(String passWord) {
         String md5Pwd = null;
         if (StringUtils.isNotBlank(passWord)) {
