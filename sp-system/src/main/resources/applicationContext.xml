@@ -2,16 +2,25 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:config="https://crnlmchina.github.io/config"
 	   xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		https://crnlmchina.github.io/config https://crnlmchina.github.io/config/config.xsd"
 
 	   default-lazy-init="true">
 
-	<description>Spring公共配置 </description>
+	<description>Spring公共配置</description>
+	<config:profile connect-str="#{systemProperties['config.zookeeper.connectString']}" root-node="#{systemProperties['config.rootNode']}" version="#{systemProperties['config.version']}"/>
+	<config:placeholder>
+		<config:group node="#{systemProperties['config.groupName']}" />
+		<config:group node="apps_common" />
+	</config:placeholder>
+
 	<import resource="classpath*:/applicationContext-cache.xml"/>
 	<import resource="classpath*:/applicationContext-shiro.xml"/>
 
 	<import resource="classpath*:/applicationContext-dao.xml"/>
-	<context:property-placeholder ignore-resource-not-found="true" location="classpath*:/jdbc.properties" />
+	<context:property-placeholder ignore-resource-not-found="true" location="classpath*:/jdbc.properties"/>
+
 </beans>

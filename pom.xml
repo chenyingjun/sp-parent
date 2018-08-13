@@ -17,11 +17,13 @@
     </modules>
 
     <properties>
+        <jdk.version>1.8</jdk.version>
         <lombok.version>1.16.6</lombok.version>
         <lang3.version>3.4</lang3.version>
         <spring.data.redis.version>1.7.2.RELEASE</spring.data.redis.version>
         <spring.session.version>1.0.2.RELEASE</spring.session.version>
         <net.json.version>2.4</net.json.version>
+        <toolkit.version>3.3.2-RELEASE</toolkit.version>
     </properties>
 
     <parent>
@@ -31,6 +33,11 @@
     </parent>
 
     <dependencies>
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>config-toolkit</artifactId>
+            <version>${toolkit.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>

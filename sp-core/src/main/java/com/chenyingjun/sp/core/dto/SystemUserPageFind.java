@@ -1,5 +1,6 @@
 package com.chenyingjun.sp.core.dto;
 
+import com.chenyingjun.sp.common.validator.NotXss;
 import lombok.Data;
 
 import javax.validation.constraints.Pattern;
@@ -11,6 +12,7 @@ public class SystemUserPageFind implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotXss
     private String name;
 
     private String nickName;
