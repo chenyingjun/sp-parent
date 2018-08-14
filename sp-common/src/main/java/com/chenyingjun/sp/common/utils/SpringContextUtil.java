@@ -1,7 +1,10 @@
 package com.chenyingjun.sp.common.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
@@ -14,11 +17,11 @@ import org.springframework.context.annotation.Configuration;
  * @since 1.0
  */
 @Configuration
-public class SpringContextUtil implements ApplicationContextAware {
+public class SpringContextUtil implements ApplicationContextAware, EmbeddedServletContainerCustomizer {
 	private static ApplicationContext applicationContext;
 
 	/**
-	 * 重构上下文信息
+	 * 重写上下文信息
 	 * @param applicationContext 上下文
 	 * @throws BeansException e
 	 */
@@ -26,6 +29,23 @@ public class SpringContextUtil implements ApplicationContextAware {
 	public void setApplicationContext(ApplicationContext applicationContext)
 			throws BeansException {
 		SpringContextUtil.applicationContext = applicationContext;
+	}
+
+	/**
+	 * 设置上下文及端口号
+	 * @param container container
+	 */
+	@Override
+	public void customize(ConfigurableEmbeddedServletContainer container) {
+		int port = GlobalUtils.getIntConfig("server.port", 0);
+		String contextPath = GlobalUtils.getConfig("server.contextPath", null);
+		if (0 != port) {
+			container.setPort(port);
+		}
+
+		if (StringUtils.isNotBlank(contextPath)) {
+			container.setContextPath(contextPath);
+		}
 	}
 
 	/**
@@ -73,6 +93,5 @@ public class SpringContextUtil implements ApplicationContextAware {
 			throws NoSuchBeanDefinitionException {
 		return applicationContext.getAliases(name);
 	}
-
 
 }

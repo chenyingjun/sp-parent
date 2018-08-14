@@ -33,7 +33,6 @@ public class CommonController {
     public String login(Map<String,Object> model) {
         model.put("time",new Date());
         model.put("message","this is a message");
-        LoggerUtils.error(getClass(), "this login url");
         return "sign";
     }
 
