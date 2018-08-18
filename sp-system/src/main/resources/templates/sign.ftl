@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="description" content="红樱桃健康后台业务系统-系统登录">
+    <meta name="description" content="系统登录">
     <meta name="author" content="chenyingjun">
     <title>后台业务系统-系统登录</title>
     <link rel="shortcut icon" href="${request.contextPath}/include/images/favicon.png"
@@ -22,7 +22,7 @@
                 <div class="signin-info">
                     <div class="logopanel">
                         <h1>
-                            <span>[</span> 项目名 <span>]</span>
+                            <span>[</span> ${global.getConfig("systemProfiles.title")?html} <span>]</span>
                         </h1>
                     </div>
                     <!-- logopanel -->

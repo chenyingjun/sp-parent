@@ -43,7 +43,7 @@
 				</h2>
 				<div class="breadcrumb-wrapper">
 					<ol class="breadcrumb">
-						<li><a href="${request.contextPath}/main">红樱桃健康业务管理系统</a></li>
+						<li><a href="${request.contextPath}/main">${global.getConfig("systemProfiles.title")?html}</a></li>
 						<li>系统管理</li>
 						<li><a href="${request.contextPath}/systemuser/">系统用户管理</a></li>
 						<li class="active">编辑系统用户信息</li>
