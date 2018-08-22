@@ -1,10 +1,7 @@
 package com.chenyingjun.sp.common.utils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
@@ -15,9 +12,13 @@ import org.springframework.context.annotation.Configuration;
  * @author chenyingjun
  * @version 2018年02月08日
  * @since 1.0
+ *
+ * @update 2018年8月22日
+ * @why 端口号重新设置在serverProperties中设置，一开始不可以是application.properties中设置了spring.session.store-type=redis
+ * 			现在改为spring.session.store-type=
  */
 @Configuration
-public class SpringContextUtil implements ApplicationContextAware, EmbeddedServletContainerCustomizer {
+public class SpringContextUtil implements ApplicationContextAware/*, EmbeddedServletContainerCustomizer*/ {
 	private static ApplicationContext applicationContext;
 
 	/**
@@ -35,7 +36,7 @@ public class SpringContextUtil implements ApplicationContextAware, EmbeddedServl
 	 * 设置上下文及端口号
 	 * @param container container
 	 */
-	@Override
+	/*@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) {
 		int port = GlobalUtils.getIntConfig("server.port", 0);
 		String contextPath = GlobalUtils.getConfig("server.contextPath", null);
@@ -46,7 +47,7 @@ public class SpringContextUtil implements ApplicationContextAware, EmbeddedServl
 		if (StringUtils.isNotBlank(contextPath)) {
 			container.setContextPath(contextPath);
 		}
-	}
+	}*/
 
 	/**
 	 * 获取上下文
